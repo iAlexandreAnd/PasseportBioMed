@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="683.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="passbiomed.view.CreatePatientController">
+   <children>
+      <Pane fx:id="bannierePane" prefHeight="67.0" prefWidth="686.0" style="-fx-background-color: #882E25#882E25;">
+         <children>
+            <Label alignment="CENTER" layoutX="13.0" layoutY="6.0" prefHeight="44.0" prefWidth="661.0" text="Création Patient" textAlignment="CENTER" textFill="#f5f2f2">
+               <font>
+                  <Font name="System Bold" size="35.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <ImageView fitHeight="533.0" fitWidth="686.0" layoutY="58.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../Ressources/Wallpaper/150212174154-anchor-background-super-169.jpg" />
+         </image>
+      </ImageView>
+      <Pane layoutX="-5.0" layoutY="549.0" prefHeight="53.0" prefWidth="692.0" style="-fx-background-color: #882E25#882E25 #882E25#882E25; -fx-background-radius: 10;">
+         <children>
+            <JFXButton fx:id="previousButton" buttonType="RAISED" ellipsisString="" layoutX="145.0" layoutY="11.0" onAction="#buttonActionPrevious" prefHeight="32.0" prefWidth="139.0" ripplerFill="#496ab8" style="-fx-background-color: #2E457F#2E457F; -fx-background-radius: 40;" text="Précédent" textFill="WHITE" underline="true" />
+            <JFXButton fx:id="NextButton" buttonType="RAISED" ellipsisString="" layoutX="294.0" layoutY="11.0" onAction="#buttonActionNext" prefHeight="32.0" prefWidth="139.0" ripplerFill="#496ab8" style="-fx-background-color: #2E457F#2E457F; -fx-background-radius: 40;" text="Suivant" textFill="WHITE" underline="true" />
+            <JFXButton fx:id="BackToMainButton" buttonType="RAISED" ellipsisString="" layoutX="445.0" layoutY="11.0" onAction="#handleRetour" prefHeight="32.0" prefWidth="139.0" ripplerFill="#496ab8" style="-fx-background-color: #2E457F#2E457F; -fx-background-radius: 40;" text="Annuler" textFill="WHITE" underline="true" />
+            <JFXButton fx:id="NextButtonWin3" buttonType="RAISED" ellipsisString="" layoutX="294.0" layoutY="11.0" onAction="#buttonActionToWin3" prefHeight="32.0" prefWidth="139.0" ripplerFill="#496ab8" style="-fx-background-color: #2E457F#2E457F; -fx-background-radius: 40;" text="Suivant" textFill="WHITE" underline="true" />
+            <JFXButton fx:id="previousButtonToWin2" buttonType="RAISED" ellipsisString="" layoutX="145.0" layoutY="11.0" onAction="#buttonActionPreviousWin2" prefHeight="32.0" prefWidth="139.0" ripplerFill="#496ab8" style="-fx-background-color: #2E457F#2E457F; -fx-background-radius: 40;" text="Précédent" textFill="WHITE" underline="true" />
+            <JFXButton fx:id="previousButtonToWin3" buttonType="RAISED" ellipsisString="" layoutX="145.0" layoutY="11.0" onAction="#buttonActionPreviousWin3" prefHeight="32.0" prefWidth="139.0" ripplerFill="#496ab8" style="-fx-background-color: #2E457F#2E457F; -fx-background-radius: 40;" text="Précédent" textFill="WHITE" underline="true" />
+            <JFXButton fx:id="NextButtonWin4" buttonType="RAISED" ellipsisString="" layoutX="294.0" layoutY="11.0" onAction="#buttonActionToWin4" prefHeight="32.0" prefWidth="139.0" ripplerFill="#496ab8" style="-fx-background-color: #2E457F#2E457F; -fx-background-radius: 40;" text="Suivant" textFill="WHITE" underline="true" />
+         </children>
+      </Pane>
+      <GridPane fx:id="GridPaneInfo2" layoutX="188.0" layoutY="99.0" prefHeight="403.0" prefWidth="307.0" style="-fx-background-color: #E9E9E9#E9E9E9; -fx-border-color: #CA8A32#CA8A32; -fx-border-width: 5; -fx-background-radius: 13; -fx-border-radius: 8;">
+         <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="154.0" minWidth="10.0" prefWidth="78.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="288.0" minWidth="10.0" prefWidth="275.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="288.0" minWidth="10.0" prefWidth="35.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="68.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="67.0" minHeight="10.0" prefHeight="67.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <ImageView fitHeight="31.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Ressources/Icons/011-map.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../../../Ressources/Icons/012-sos.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="38.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@../../../Ressources/Icons/003-blood-type.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="32.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4">
+               <image>
+                  <Image url="@../../../Ressources/Icons/002-genders.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="34.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="5">
+               <image>
+                  <Image url="@../../../Ressources/Icons/001-picture.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@../../../Ressources/Icons/012-sos.png" />
+               </image>
+            </ImageView>
+            <JFXDatePicker fx:id="DatePickerBirthday" promptText="Choisissez une date." GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <JFXTextField fx:id="TextFieldCP" alignment="CENTER" promptText="Code postal" GridPane.columnIndex="1" />
+            <JFXTextField fx:id="TextFieldICE_Nom" alignment="CENTER" promptText="ICE Nom" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <JFXTextField fx:id="TextFieldICE_Tel" alignment="CENTER" promptText="ICE Téléphone" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <JFXComboBox fx:id="ComboBox_GS" promptText="             Groupe sanguin" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <children>
+                  <JFXRadioButton fx:id="RadioButtonMale" text="Masculin">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="GenderGroup" />
+                     </toggleGroup>
+                  </JFXRadioButton>
+                  <JFXRadioButton fx:id="RadioButtonFemale" text="Feminin" toggleGroup="$GenderGroup" />
+               </children>
+            </HBox>
+         </children>
+      </GridPane>
+      <GridPane fx:id="GridPaneInfo1" layoutX="188.0" layoutY="99.0" prefHeight="403.0" prefWidth="307.0" style="-fx-background-color: #E9E9E9#E9E9E9; -fx-border-color: #CA8A32#CA8A32; -fx-border-width: 5; -fx-background-radius: 13; -fx-border-radius: 8;">
+         <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="81.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="272.0" minWidth="10.0" prefWidth="262.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="288.0" minWidth="10.0" prefWidth="35.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <ImageView fitHeight="36.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@../../../Ressources/Icons/013-technology.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="29.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@../../../Ressources/Icons/009-map-location.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="34.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4">
+               <image>
+                  <Image url="@../../../Ressources/Icons/004-maps-and-flags.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Ressources/Icons/005-people-1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../../../Ressources/Icons/005-people-1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="35.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="5">
+               <image>
+                  <Image url="@../../../Ressources/Icons/010-compass.png" />
+               </image>
+            </ImageView>
+            <JFXTextField fx:id="TextFieldNom" alignment="CENTER" prefHeight="27.0" prefWidth="184.0" promptText="Nom" GridPane.columnIndex="1" />
+            <JFXTextField fx:id="TextFieldPrenom" alignment="CENTER" promptText="Prénom" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <JFXTextField fx:id="TextFieldTel" alignment="CENTER" promptText="Téléphone" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <JFXTextField fx:id="TextFieldAdresse" alignment="CENTER" promptText="Adresse" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <JFXComboBox fx:id="ComboBoxPays" prefHeight="27.0" prefWidth="190.0" promptText="                     Pays " GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <JFXTextField fx:id="TextFieldLocalité" alignment="CENTER" promptText="Localité" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </GridPane>
+      <GridPane fx:id="GridPaneInfo3" layoutX="188.0" layoutY="99.0" prefHeight="403.0" prefWidth="307.0" style="-fx-background-color: #E9E9E9#E9E9E9; -fx-border-color: #CA8A32#CA8A32; -fx-border-width: 5; -fx-border-radius: 8; -fx-background-radius: 13;">
+         <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="299.0" minWidth="0.0" prefWidth="274.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="330.0" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="330.0" minHeight="10.0" prefHeight="268.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="316.0" minHeight="10.0" prefHeight="59.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <JFXButton fx:id="Chercher_photo" buttonType="RAISED" ellipsisString="" prefHeight="32.0" prefWidth="234.0" ripplerFill="#496ab8" style="-fx-background-color: #2E457F#2E457F; -fx-background-radius: 40;" text="Parcourir" textFill="WHITE" underline="true" GridPane.rowIndex="2" />
+            <Label alignment="CENTER" prefHeight="40.0" prefWidth="182.0" style="-fx-border-color: #882E25#882E25 #882E25#882E25; -fx-border-width: 2; -fx-border-radius: 6;" text="Photo du patient">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <StackPane fx:id="contentPane" onDragDropped="#mouseDragDropped" onDragExited="#paneIsExited" onDragOver="#mouseDragOver" prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fx:id="PicturePatient" fitHeight="284.0" fitWidth="231.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Ressources/Wallpaper/Logo.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
+         </children>
+      </GridPane>
+      <GridPane fx:id="GridPaneInfo4" layoutX="188.0" layoutY="99.0" prefHeight="403.0" prefWidth="307.0" style="-fx-background-color: #E9E9E9#E9E9E9; -fx-border-color: #CA8A32#CA8A32; -fx-border-width: 3; -fx-background-radius: 13; -fx-border-radius: 8;">
+         <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="81.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="272.0" minWidth="10.0" prefWidth="262.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="288.0" minWidth="10.0" prefWidth="35.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <ImageView fitHeight="36.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Ressources/Icons/002-email.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="37.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@../../../Ressources/Icons/001-account.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="42.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@../../../Ressources/Icons/004-pin-code.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="42.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4">
+               <image>
+                  <Image url="@../../../Ressources/Icons/001-technology.png" />
+               </image>
+            </ImageView>
+            <JFXTextField fx:id="mailAddress" alignment="CENTER" promptText="Adresse e-mail" viewOrder="1.0" GridPane.columnIndex="1" />
+            <JFXTextField fx:id="logginName" alignment="CENTER" promptText="Identifiant" viewOrder="3.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <JFXTextField fx:id="PasswordName" alignment="CENTER" promptText="Mot de passe" viewOrder="4.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <JFXButton fx:id="CréerUtilisateur" buttonType="RAISED" ellipsisString="" onAction="#createUser" prefHeight="32.0" prefWidth="139.0" ripplerFill="#496ab8" style="-fx-background-color: #D22E2A#D22E2A; -fx-background-radius: 40;" text="Créer patient" textFill="WHITE" underline="true" viewOrder="5.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ImageView fitHeight="37.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../../../Ressources/Icons/003-qr-code.png" />
+               </image>
+            </ImageView>
+            <JFXTextField fx:id="numéroRegistre" alignment="CENTER" promptText="Numéro registre national" viewOrder="2.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </GridPane>
+   </children>
+</AnchorPane>

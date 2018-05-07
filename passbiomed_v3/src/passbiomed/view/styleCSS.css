@@ -1,0 +1,37 @@
+.jfx-text-field
+{
+    -fx-prompt-text-fill: WHITE;
+    -fx-text-fill: WHITE;
+    -fx-alignment: center ;
+    -fx-text-alignment: center;
+}
+
+.jfx-password-field
+{
+	-fx-prompt-text-fill: WHITE;
+	-fx-text-fill: WHITE;
+}
+.jfx-combo-box
+{
+	-fx-prompt-text-fill: WHITE;
+	-fx-alignment: CENTER;
+	-fx-text-alignment: center;
+	
+}
+
+.jfx-combo-box .string
+{
+	-fx-text-fill: WHITE;
+	-fx-alignment: CENTER;
+	-fx-text-alignment: center;
+	
+}
+
+.text-field:empty 
+{
+    -fx-alignment: center ;
+}
+.text-field:empty:focused 
+{
+    -fx-alignment: center-left ;
+}

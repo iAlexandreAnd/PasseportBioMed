@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" fx:id="menuPrincipal" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #363636#363636;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="passbiomed.view.MainMenuController">
+   <children>
+      <ImageView cache="true" fitHeight="619.0" fitWidth="1000.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../Ressources/Wallpaper/150212174154-anchor-background-super-169.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="366.0" layoutY="29.0" prefHeight="42.0" prefWidth="283.0" text="iCARE MENU PRINCIPAL" textAlignment="CENTER" textFill="#a73f3f">
+         <font>
+            <Font name="Roboto Medium" size="23.0" />
+         </font>
+      </Label>
+      <Label layoutX="271.0" layoutY="71.0" prefHeight="51.0" prefWidth="474.0" text="Menu principal de création, gestion et consultation de passeports biomédicaux. " textAlignment="CENTER" textFill="#a73f3f" wrapText="true">
+         <font>
+            <Font name="Roboto Medium" size="14.0" />
+         </font>
+      </Label>
+      <HBox fx:id="boxMenus" layoutX="63.0" layoutY="187.0" prefHeight="237.0" prefWidth="855.0" spacing="10.0" style="-fx-background-color: #5C6770#5C6770; -fx-background-radius: 10;">
+         <children>
+            <AnchorPane prefHeight="227.0" prefWidth="207.0" style="-fx-background-color: #8F3027#8F3027 #8F3027#8F3027; -fx-border-color: #CA8A32#CA8A32; -fx-border-width: 3; -fx-background-radius: 10; -fx-border-radius: 8;">
+               <children>
+                  <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="54.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Ressources/Icons/003-account.png" />
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" layoutX="18.0" layoutY="163.0" prefHeight="51.0" prefWidth="171.0" text="Créer un nouvel utilisateur." textAlignment="CENTER" textFill="#1e1616" wrapText="true">
+                     <font>
+                        <Font name="Roboto Medium" size="11.0" />
+                     </font>
+                  </Label>
+                  <JFXButton fx:id="boutonCreer" buttonType="RAISED" ellipsisString="" layoutX="34.0" layoutY="132.0" onAction="#handleBoutonCreer" prefHeight="32.0" prefWidth="139.0" style="-fx-background-color: #2E457F#2E457F; -fx-background-radius: 40;" text="Créer" textFill="WHITE" underline="true" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="227.0" prefWidth="207.0" style="-fx-background-color: #8F3027#8F3027 #8F3027#8F3027 #8F3027#8F3027 #8F3027#8F3027; -fx-border-color: #CA8A32#CA8A32; -fx-border-width: 3; -fx-background-radius: 10; -fx-border-radius: 8;">
+               <children>
+                  <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="54.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Ressources/Icons/015-folder-4.png" />
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" layoutX="18.0" layoutY="163.0" prefHeight="51.0" prefWidth="171.0" text="Consulter et modifier le passeport d'un patient." textAlignment="CENTER" textFill="#1b1616" textOverrun="CLIP" wrapText="true">
+                     <font>
+                        <Font name="Roboto Medium" size="11.0" />
+                     </font>
+                  </Label>
+                  <JFXButton fx:id="boutonConsulter" buttonType="RAISED" ellipsisString="" layoutX="35.0" layoutY="132.0" onAction="#handleBoutonConsulter" prefHeight="32.0" prefWidth="139.0" style="-fx-background-color: #2E457F#2E457F; -fx-background-radius: 40;" text="Consulter" textFill="WHITE" underline="true" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="201.0" prefWidth="207.0" style="-fx-background-color: #8F3027#8F3027 #8F3027#8F3027 #8F3027#8F3027 #8F3027#8F3027; -fx-border-color: #CA8A32#CA8A32; -fx-border-width: 3; -fx-background-radius: 10; -fx-border-radius: 8;">
+               <children>
+                  <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="54.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="54.0" AnchorPane.rightAnchor="53.0" AnchorPane.topAnchor="14.0">
+                     <image>
+                        <Image url="@../../../Ressources/Icons/005-pie-chart.png" />
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" layoutX="18.0" layoutY="163.0" prefHeight="51.0" prefWidth="171.0" text="Statistiques diverses." textAlignment="CENTER" textFill="#141212" wrapText="true">
+                     <font>
+                        <Font name="Roboto Medium" size="11.0" />
+                     </font>
+                  </Label>
+                  <JFXButton fx:id="butonStatistiques" buttonType="RAISED" ellipsisString="" layoutX="37.0" layoutY="132.0" prefHeight="32.0" prefWidth="139.0" style="-fx-background-color: #2E457F#2E457F; -fx-background-radius: 40;" text="Statistiques" textFill="WHITE" underline="true" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="227.0" prefWidth="207.0" style="-fx-background-color: #8F3027#8F3027 #8F3027#8F3027 #8F3027#8F3027 #8F3027#8F3027; -fx-border-color: #CA8A32#CA8A32; -fx-border-width: 3; -fx-background-radius: 10; -fx-border-radius: 8;">
+               <children>
+                  <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="54.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Ressources/Icons/wrench.png" />
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" layoutX="18.0" layoutY="163.0" prefHeight="51.0" prefWidth="171.0" text="Developement in progress." textAlignment="CENTER" textFill="#140606" wrapText="true">
+                     <font>
+                        <Font name="Roboto Medium" size="11.0" />
+                     </font>
+                  </Label>
+                  <JFXButton fx:id="boutonSoon" buttonType="RAISED" ellipsisString="" layoutX="35.0" layoutY="132.0" prefHeight="32.0" prefWidth="139.0" style="-fx-background-color: #2E457F#2E457F; -fx-background-radius: 40;" text="Coming soon" textFill="WHITE" underline="true" />
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+      <JFXButton fx:id="LeaveButton" buttonType="RAISED" ellipsisString="" layoutX="285.0" layoutY="517.0" onAction="#leaveProgram" prefHeight="38.0" prefWidth="406.0" style="-fx-background-color: #2E457F#2E457F; -fx-background-radius: 40;" text="Quitter" textFill="WHITE" underline="true">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>
