@@ -1,7 +1,9 @@
 package passbiomed.view;
 
+import java.net.URL;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -13,6 +15,8 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -25,8 +29,10 @@ import passbiomed.model.Trouble;
 import org.controlsfx.control.textfield.TextFields;
 
 
-public class MaladieWindowController 
+public class MaladieWindowController implements Initializable
 {
+	private String loadedPassbiomedID;
+	
 	static PreparedStatement preparedStatement = null;
 	
 	private ObservableList<Trouble> troubleData = FXCollections.observableArrayList();
@@ -43,6 +49,9 @@ public class MaladieWindowController
     @FXML
     private TableColumn<Trouble, String> masterTypeColonne;
     
+    
+    @FXML
+    private Label labelTest;
     
 	@FXML
     private GridPane borderGrid;
@@ -68,18 +77,38 @@ public class MaladieWindowController
 //	final String cssGrid = "-fx-border-color: #A0A0A0;" 
 //			   +"-fx-border-width: 0px 4px 4px 4px";
 //	   
-	  @FXML
+    
+    public void setPassBioMedID(String id) {
+    	this.loadedPassbiomedID = id;
+    }
+    
+    @Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+    	nomUniverselColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("nomUniversel"));
+    	nomCommunColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("nomCommun"));
+    	sousTypeColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("sousType"));
+    	masterTypeColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("masterType"));
+    	
+    	displayData();	
+		labelTest.setText(loadedPassbiomedID);
+    	System.out.print("ID : ");
+		System.out.println(loadedPassbiomedID);
+		
+		TextFields.bindAutoCompletion(filterField, troubleDataString);
+	}
+	  /*@FXML
 	  private void initialize() 
 	  {
-		  	nomUniverselColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("nomUniversel"));
+		  nomUniverselColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("nomUniversel"));
 	    	nomCommunColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("nomCommun"));
 	    	sousTypeColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("sousType"));
 	    	masterTypeColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("masterType"));
 	    	
-	    	displayData();
-	    	
+	    	displayData();	
+			labelTest.setText(loadedPassbiomedID);
 	    	TextFields.bindAutoCompletion(filterField, troubleDataString);
-	  }
+		  	
+	  }*/
 	  
 	  private void displayData() {
 		  
@@ -118,6 +147,9 @@ public class MaladieWindowController
 			
 			troubleTable.setItems(troubleData);
 			
+			preparedStatement.close();
+			resultSet.close();
+			
 		  }catch (Exception e) {
 			e.printStackTrace();
 		  }
@@ -152,4 +184,15 @@ public class MaladieWindowController
 		  troubleTable.setItems(sortedData);
 		  
 	  }
+	  
+	  @FXML
+	  private void handleAddTrouble()
+	  {
+		    labelTest.setText(loadedPassbiomedID);
+	    	System.out.print("ID : ");
+			System.out.println(loadedPassbiomedID);
+	  }
+
+
+	
 }

@@ -15,6 +15,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -297,7 +298,7 @@ public class PatientOverviewController
 					troubleData.add(tempTrouble);
 				}
 				troubleTable.setItems(troubleData);
-				
+				/*
 				preparedStatement =(PreparedStatement) connect.prepareStatement(sql4);
 				preparedStatement.setString(1, loadedPassbiomedID);
 				
@@ -310,7 +311,7 @@ public class PatientOverviewController
 					
 					operationData.add(tempOperation);
 				}
-				operationTable.setItems(operationData);
+				operationTable.setItems(operationData);*/
 			}
 			else
 			{
@@ -366,10 +367,17 @@ public class PatientOverviewController
     		{
     		    FXMLLoader fxmlLoader = new FXMLLoader();
     		    fxmlLoader.setLocation(getClass().getResource("MaladieWindow.fxml"));
-    		    		
-    		    Scene scene = new Scene(fxmlLoader.load());
+    		    
+    		    Parent root =(Parent)fxmlLoader.load();
+    		    
+    		    MaladieWindowController controller = fxmlLoader.<MaladieWindowController>getController();
+    		    controller.setPassBioMedID(loadedPassbiomedID);
+    		    
+    		    
+    		    
+    		    Scene scene = new Scene(root);
+    		    
     		    Stage stage = new Stage();
-    		    		
     		    stage.setTitle("Ajout d'un trouble");
     		    stage.setScene(scene);
     		    stage.centerOnScreen();

@@ -88,11 +88,12 @@
                   <Font size="17.0" />
                </font>
             </Label>
-            <JFXButton fx:id="addToPatient" buttonType="RAISED" ellipsisString="" layoutX="235.0" layoutY="561.0" prefHeight="27.0" prefWidth="406.0" style="-fx-background-color: #2E457F#2E457F; -fx-background-radius: 40; -fx-border-color: #CA8A32#CA8A32; -fx-border-width: 2; -fx-border-radius: 40;" text="Ajouter au patient" textFill="WHITE" underline="true">
+            <JFXButton buttonType="RAISED" ellipsisString="" layoutX="235.0" layoutY="561.0" onAction="#handleAddTrouble" prefHeight="27.0" prefWidth="406.0" style="-fx-background-color: #2E457F#2E457F; -fx-background-radius: 40; -fx-border-color: #CA8A32#CA8A32; -fx-border-width: 2; -fx-border-radius: 40;" text="Ajouter au patient" textFill="WHITE" underline="true">
                <font>
                   <Font size="14.0" />
                </font>
             </JFXButton>
+            <Label fx:id="labelTest" layoutX="449.0" layoutY="81.0" text="ID vient ici" textFill="#f5f4f4" />
          </children>
       </AnchorPane>
    </children>
