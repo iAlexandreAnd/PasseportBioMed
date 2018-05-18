@@ -205,7 +205,7 @@ public class CreatePatientController
     		System.out.println("Tel: "+tel);
     		System.out.println("Adresse: "+adresse);
     		System.out.println("Pays: "+pays);
-    		System.out.println("Localit�: "+localite);
+    		System.out.println("Localite: "+localite);
     		
     		
     	
@@ -422,7 +422,7 @@ public class CreatePatientController
     		try 
     		{
     			Class.forName("com.mysql.jdbc.Driver");
-    			String url = "jdbc:mysql://localhost:3306/passbiomed_v2";
+    			String url = "jdbc:mysql://localhost:3306/passbiomed_v3";
     			String user = "root";
     			String password = "Secret123";
     			
@@ -456,7 +456,7 @@ public class CreatePatientController
     		try 
     		{
     			Class.forName("com.mysql.jdbc.Driver");
-    			String url = "jdbc:mysql://localhost:3306/passbiomed_v2";
+    			String url = "jdbc:mysql://localhost:3306/passbiomed_v3";
     			String user = "root";
     			String password = "Secret123";
     			
