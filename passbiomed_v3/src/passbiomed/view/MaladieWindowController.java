@@ -24,6 +24,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import passbiomed.model.Trouble;
 
 import org.controlsfx.control.textfield.TextFields;
@@ -32,6 +33,7 @@ import org.controlsfx.control.textfield.TextFields;
 public class MaladieWindowController implements Initializable
 {
 	private String loadedPassbiomedID;
+	private int troubleID;
 	
 	static PreparedStatement preparedStatement = null;
 	
@@ -91,9 +93,7 @@ public class MaladieWindowController implements Initializable
     	
     	displayData();	
 		labelTest.setText(loadedPassbiomedID);
-    	System.out.print("ID : ");
-		System.out.println(loadedPassbiomedID);
-		
+    	
 		TextFields.bindAutoCompletion(filterField, troubleDataString);
 	}
 	  /*@FXML
@@ -188,9 +188,57 @@ public class MaladieWindowController implements Initializable
 	  @FXML
 	  private void handleAddTrouble()
 	  {
-		    labelTest.setText(loadedPassbiomedID);
-	    	System.out.print("ID : ");
+		   try {
+		  	Trouble temptrouble = troubleTable.getSelectionModel().getSelectedItem();
+		    System.out.println(temptrouble.getNomUniversel());
+		    System.out.print("ID : ");
 			System.out.println(loadedPassbiomedID);
+			
+			Class.forName("com.mysql.jdbc.Driver");
+			System.out.println("Driver OK");
+			
+			String url = "jdbc:mysql://localhost:3306/passbiomed_v3";
+			String user = "root";
+			String password = "Secret123";
+			String sql = "Select Code_CIM, IDTrouble from troubles where Code_CIM=?;";
+			
+			System.out.println("Connection start");
+			
+			Connection connect = (Connection) DriverManager.getConnection(url, user, password);
+			ResultSet resultSet2 = null;
+			
+			System.out.println("Connection OK");
+			
+			PreparedStatement prepStat2 =(PreparedStatement) connect.prepareStatement(sql);
+			prepStat2.setString(1, temptrouble.getNomUniversel());
+			
+			
+			System.out.println("getNomUniversel OK");
+			
+			resultSet2 = prepStat2.executeQuery();
+			
+			if(resultSet2.next())
+			troubleID = resultSet2.getInt("IDTrouble");
+			
+			System.out.println("Assignation troubleID OK");
+			
+			String sql2 = "INSERT INTO `passbiomed_v3`.`consigner` (`Actif`, `Important`, `IDPasseport_biomed`, `IDTrouble`) VALUES ('0', '0', ?, ?);";
+			PreparedStatement prepStat3 =(PreparedStatement) connect.prepareStatement(sql2);
+			prepStat3.setString(1, loadedPassbiomedID);
+			prepStat3.setInt(2, troubleID);
+			
+			prepStat3.executeUpdate();
+			
+			//INSERT INTO `passbiomed_v3`.`consigner` (`Actif`, `Important`, `IDPasseport_biomed`, `IDTrouble`) VALUES ('0', '0', '2', '5');
+
+			
+		   }catch (Exception e) {
+				e.printStackTrace();
+		}
+		
+		Stage stage =(Stage) addToPatient.getScene().getWindow();
+		
+		stage.close();
 	  }
 
 
