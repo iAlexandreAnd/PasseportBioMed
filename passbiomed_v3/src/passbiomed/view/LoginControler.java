@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 //import javax.xml.bind.TypeConstraintException;
 
 import com.jfoenix.controls.JFXTextField;
+import com.mysql.jdbc.CallableStatement;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
@@ -131,9 +132,10 @@ public class LoginControler
     
     public static int ConnectDataBase (String loginField, String passwordField) 
     {
-    	String sql = "SELECT * FROM Login WHERE Login_nom = ? and Login_password = ?";
     	int verificationLogin =0;
 		try {
+			String query = "{call get_login_password(?,?)}"; //Procedure
+			
 			Class.forName("com.mysql.jdbc.Driver");
 			System.out.println("Driver OK");
 			
@@ -141,16 +143,16 @@ public class LoginControler
 			String user = "root";
 			String password = "Secret123";
 			
+			
 			Connection connect = (Connection) DriverManager.getConnection(url, user, password);
+			CallableStatement statement =  (CallableStatement) connect.prepareCall(query);
+			statement.setString(1, loginField);
+			statement.setString(2, passwordField);
+			
 			ResultSet resultSet = null;
 			
-			preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
-			preparedStatement.setString(1, loginField);
-			preparedStatement.setString(2, passwordField);
+			resultSet = statement.executeQuery();
 			
-			resultSet = preparedStatement.executeQuery();
-			
-
 			
 			if(resultSet.next())
 			{
@@ -161,8 +163,6 @@ public class LoginControler
 			{
 				verificationLogin=0;
 			}
-			
-			preparedStatement.close();
 			resultSet.close();
 		}catch (Exception e) {
 			e.printStackTrace();

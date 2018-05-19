@@ -403,7 +403,23 @@ public class PatientOverviewController
     	}
     	else
     	{
-    		
+    		Trouble temptrouble = troubleTable.getSelectionModel().getSelectedItem();
+    		try {
+    			Class.forName("com.mysql.jdbc.Driver");
+    			System.out.println("Driver OK");
+    			
+    			String url = "jdbc:mysql://localhost:3306/passbiomed_v3";
+    			String user = "root";
+    			String password = "Secret123";
+    			
+    			Connection connect = (Connection) DriverManager.getConnection(url, user, password);
+    			ResultSet resultSet = null;
+    			
+    			//DELETE FROM `passbiomed_v3`.`consigner` WHERE `IDConsigner`=?;
+    			
+    		}catch (Exception e) {
+				e.printStackTrace();
+    		}
     	}
     }
     
