@@ -128,7 +128,7 @@ public class PatientOverviewController
     	sousTypeColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("sousType"));
     	masterTypeColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("masterType"));
     	
-    	//Tableview d'opération et traitement
+    	//Tableview d'opï¿½ration et traitement
     	nomOperationColonne.setCellValueFactory(new PropertyValueFactory<Operation, String>("nomOperation"));
     	commentaireOpColonne.setCellValueFactory(new PropertyValueFactory<Operation, String>("commentaire"));
     }
@@ -161,18 +161,18 @@ public class PatientOverviewController
     			
     			if(resultSet.next())
     			{
-    				System.out.println("Patient trouvé");
+    				System.out.println("Patient trouvï¿½");
     				loadedPatientID=resultSet.getString(1);
     				loadedPassbiomedID=resultSet.getString("IDpasseport_biomed");
     				displayData();
     			}
     			else
     			{
-    				System.out.println("Patient non-trouvé");
+    				System.out.println("Patient non-trouvï¿½");
     				Alert alert = new Alert(AlertType.ERROR);
     	            alert.setTitle("Erreur");
     	            alert.setHeaderText("Erreur");
-    	            alert.setContentText("Patient n'a pas été trouvé");
+    	            alert.setContentText("Patient n'a pas ï¿½tï¿½ trouvï¿½");
     	            alert.showAndWait();
     			}
     			
@@ -315,7 +315,7 @@ public class PatientOverviewController
 			}
 			else
 			{
-				System.out.println("Patient non-trouvé");
+				System.out.println("Patient non-trouvï¿½");
 			}
 			
 			
@@ -372,8 +372,6 @@ public class PatientOverviewController
     		    
     		    MaladieWindowController controller = fxmlLoader.<MaladieWindowController>getController();
     		    controller.setPassBioMedID(loadedPassbiomedID);
-    		    
-    		    
     		    
     		    Scene scene = new Scene(root);
     		    
@@ -445,7 +443,7 @@ public class PatientOverviewController
 	    		Scene scene = new Scene(fxmlLoader.load());
 	    		Stage stage = new Stage();
 	    		
-	    		stage.setTitle("Ajout d'un médicament");
+	    		stage.setTitle("Ajout d'un mï¿½dicament");
 	    		stage.setScene(scene);
 	    		stage.centerOnScreen();
 	    		stage.initModality(Modality.APPLICATION_MODAL);
