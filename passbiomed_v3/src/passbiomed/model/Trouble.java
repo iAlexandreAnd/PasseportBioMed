@@ -10,7 +10,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.CheckBox;
 
-public class Trouble {
+public class Trouble 
+{
 	
 	private final StringProperty nomUniversel;
 	private final StringProperty nomCommun;
@@ -31,7 +32,7 @@ public class Trouble {
 	    this.sousType = new SimpleStringProperty(sousType);
 	    this.masterType = new SimpleStringProperty(masterType);
 	    this.dateConsigner = new SimpleStringProperty(dateConsigner);
-	    this.setImportant(new CheckBox());
+	    this.important = new CheckBox();
 	}
 	
 	public String getNomUniversel() 
