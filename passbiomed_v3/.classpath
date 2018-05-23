@@ -7,8 +7,9 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/Alexandre/Documents/GitHub/passeportbiomed/Passeport Bio Med v2/lib/mysql-connector-java-5.1.45-bin.jar" sourcepath="C:/Users/Alexandre/Documents/GitHub/passeportbiomed/Passeport Bio Med v2/lib/mysql-connector-java-5.1.45-bin.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Alexandre/Documents/GitHub/passeportbiomed/Passeport Bio Med v2/lib/jfoenix-9.0.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Alexandre/Documents/GitHub/passeportbiomed/Passeport Bio Med v2/lib/controlsfx-9.0.0.jar"/>
+	<classpathentry kind="lib" path="/Users/loris/git/PasseportBioMed/passbiomed_v3/lib/controlsfx-9.0.0.jar"/>
+	<classpathentry kind="lib" path="/Users/loris/git/PasseportBioMed/passbiomed_v3/lib/jfoenix-9.0.0.jar"/>
+	<classpathentry kind="lib" path="/Users/loris/git/PasseportBioMed/passbiomed_v3/lib/jfoenix-9.0.1.jar"/>
+	<classpathentry kind="lib" path="/Users/loris/git/PasseportBioMed/passbiomed_v3/lib/mysql-connector-java-5.1.45-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
