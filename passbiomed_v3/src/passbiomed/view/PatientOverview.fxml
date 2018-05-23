@@ -142,6 +142,7 @@
                                     <TableColumn fx:id="sousTypeColonne" prefWidth="191.0" text="Sous-type" />
                                     <TableColumn fx:id="dateConsignerColonne" prefWidth="123.0" text="Date Consignation" />
                                     <TableColumn fx:id="flagImportance" prefWidth="123.0" text="Important" />
+                                    <TableColumn fx:id="flagActif" prefWidth="123.0" text="Actif" />
                                 </columns>
                               </TableView>
                               <GridPane prefHeight="95.0" prefWidth="48.0" GridPane.columnIndex="1">

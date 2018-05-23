@@ -2,6 +2,7 @@ package passbiomed.view;
 
 
 
+import java.awt.Checkbox;
 import java.awt.TextField;
 import java.io.IOException;
 import java.security.KeyStore.ProtectionParameter;
@@ -25,6 +26,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -63,6 +65,8 @@ public class PatientOverviewController
     private TableColumn<Trouble, String> dateConsignerColonne;
     @FXML
     private TableColumn<Trouble, String> flagImportance;
+    @FXML
+    private TableColumn<Trouble, String> flagActif;
     
 
     
@@ -141,12 +145,11 @@ public class PatientOverviewController
     	masterTypeColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("masterType"));
     	dateConsignerColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("dateConsigner"));
     	flagImportance.setCellValueFactory(new PropertyValueFactory<Trouble, String>("important"));
+    	flagActif.setCellValueFactory(new PropertyValueFactory<Trouble, String>("actif"));
     	
     	
-    	
-    	
-    	
-    	
+    	flagImportance.setStyle("-fx-alignment: CENTER;");
+    	flagActif.setStyle("-fx-alignment: CENTER;");
     	
     	//Tableview d'op�ration et traitement
     	nomOperationColonne.setCellValueFactory(new PropertyValueFactory<Operation, String>("nomOperation"));
@@ -249,7 +252,7 @@ public class PatientOverviewController
     			"inner join repertorier using(IDPasseport_biomed)\n" + 
     			"inner join medicament using(IDMedicament)\n" + 
     			"where IDPasseport_biomed=? ;";
-    	String sql3 = "Select troubles.Code_CIM, troubles.Nom_commun, sous_type.Nom_sous_type, type_trouble.Nom_type_trouble, Consigner.DateEntreeConsigner from patient\n" + 
+    	String sql3 = "Select troubles.Code_CIM, troubles.Nom_commun, sous_type.Nom_sous_type, type_trouble.Nom_type_trouble, Consigner.DateEntreeConsigner, Consigner.Important, Consigner.Actif from patient\n" + 
     			"inner join passeport_biomed using (IDPasseport_biomed)\n" + 
     			"inner join consigner using (IDPasseport_biomed)\n" + 
     			"inner join troubles using (IDTrouble)\n" + 
@@ -327,9 +330,53 @@ public class PatientOverviewController
 					DateFormat df = new SimpleDateFormat("dd/MM/YYYY");
 					String dateFinal = df.format(date);
 					System.out.println(dateFinal);
-								
-//					System.out.println(dateEssai);
-								
+					CheckBox essai = new CheckBox();
+					
+					int flagImportance = resultSet.getInt("Important");
+					
+					if(flagImportance == 1) 
+					{	
+						System.out.println("");
+						System.out.println("*******************");
+						System.out.println("Nom: "+tempTrouble.getNomCommun());
+						System.out.println("Bool retourné: "+flagImportance);
+						System.out.println("*******************");
+						
+						boolean checkboxSelection = true;
+						essai.setSelected(checkboxSelection);
+					}
+					else 
+					{
+						System.out.println("");
+						System.out.println("*******************");
+						System.out.println("Nom: "+tempTrouble.getNomCommun());
+						System.out.println("Bool retourné: "+flagImportance);
+						System.out.println("*******************");
+						
+						boolean checkboxSelection = false;
+						essai.setSelected(checkboxSelection);
+						
+					}
+					
+					CheckBox actif = new CheckBox();
+					int flagActif = resultSet.getInt("Actif");
+					
+					System.out.println("Flag actif: "+flagActif);
+					
+					
+					if(flagActif == 1) 
+					{
+						boolean checkBoxActif = true;
+						actif.setSelected(checkBoxActif);
+					}
+					else 
+					{
+						boolean checkBoxActif = false;
+						actif.setSelected(checkBoxActif);
+					}
+
+					tempTrouble.setImportant(essai);				
+					tempTrouble.setActif(actif);
 					tempTrouble.setDateConsigner(dateFinal);
 					
 					troubleData.add(tempTrouble);

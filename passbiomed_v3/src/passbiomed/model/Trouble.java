@@ -19,12 +19,14 @@ public class Trouble
 	private final StringProperty masterType;
 	private final StringProperty dateConsigner;
 	private CheckBox important;
+	private CheckBox actif;
 	
 	public Trouble() 
 	{
 		this(null,null,null,null,null);
 	}
 	
+
 	public Trouble(String nomUniversel, String nomCommun, String sousType, String masterType, String dateConsigner) 
 	{
 		this.nomUniversel = new SimpleStringProperty(nomUniversel);
@@ -33,6 +35,7 @@ public class Trouble
 	    this.masterType = new SimpleStringProperty(masterType);
 	    this.dateConsigner = new SimpleStringProperty(dateConsigner);
 	    this.important = new CheckBox();
+	    this.actif = new CheckBox();
 	}
 	
 	public String getNomUniversel() 
@@ -111,5 +114,17 @@ public class Trouble
 	public void setImportant(CheckBox important) 
 	{
 		this.important = important;
+	}
+
+
+	public CheckBox getActif() 
+	{
+		return actif;
+	}
+
+
+	public void setActif(CheckBox actif) 
+	{
+		this.actif = actif;
 	}
 }
