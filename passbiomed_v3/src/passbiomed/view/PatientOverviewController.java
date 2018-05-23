@@ -4,8 +4,14 @@ package passbiomed.view;
 
 import java.awt.TextField;
 import java.io.IOException;
+import java.security.KeyStore.ProtectionParameter;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalQuery;
+import java.util.Date;
 
 import com.jfoenix.controls.JFXTextField;
 import com.mysql.jdbc.Connection;
@@ -53,6 +59,11 @@ public class PatientOverviewController
     private TableColumn<Trouble, String> sousTypeColonne;
     @FXML
     private TableColumn<Trouble, String> masterTypeColonne;
+    @FXML
+    private TableColumn<Trouble, String> dateConsignerColonne;
+    @FXML
+    private TableColumn<Trouble, String> flagImportance;
+    
 
     
     @FXML
@@ -117,6 +128,7 @@ public class PatientOverviewController
     private void initialize() {
     	loadedPatientID = "0";
     	loadedPassbiomedID = "0";
+    	
     	//Tableview de medicament
     	nomChimiqueColonne.setCellValueFactory(new PropertyValueFactory<Medicament, String>("nomChimique"));
     	nomMedicamentUniColonne.setCellValueFactory(new PropertyValueFactory<Medicament, String>("nomUniversel"));
@@ -127,6 +139,14 @@ public class PatientOverviewController
     	nomCommunColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("nomCommun"));
     	sousTypeColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("sousType"));
     	masterTypeColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("masterType"));
+    	dateConsignerColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("dateConsigner"));
+    	flagImportance.setCellValueFactory(new PropertyValueFactory<Trouble, String>("important"));
+    	
+    	
+    	
+    	
+    	
+    	
     	
     	//Tableview d'op�ration et traitement
     	nomOperationColonne.setCellValueFactory(new PropertyValueFactory<Operation, String>("nomOperation"));
@@ -135,11 +155,13 @@ public class PatientOverviewController
     
     
     @FXML
-    private void handleOk() {
+    private void handleOk() 
+    {
     	
     	String nomFieldS = this.nomField.getText();
     	String prenomFieldS = this.prenomField.getText();
-        if (isInputValid()) {
+        if (isInputValid()) 
+        {
         	
         	String sql = "SELECT * FROM Patient WHERE Nom = ? and Prenom = ?";
     		try {
@@ -161,7 +183,7 @@ public class PatientOverviewController
     			
     			if(resultSet.next())
     			{
-    				System.out.println("Patient trouv�");
+    				System.out.println("Patient trouve");
     				loadedPatientID=resultSet.getString(1);
     				loadedPassbiomedID=resultSet.getString("IDpasseport_biomed");
     				displayData();
@@ -227,7 +249,7 @@ public class PatientOverviewController
     			"inner join repertorier using(IDPasseport_biomed)\n" + 
     			"inner join medicament using(IDMedicament)\n" + 
     			"where IDPasseport_biomed=? ;";
-    	String sql3 = "Select troubles.Code_CIM, troubles.Nom_commun, sous_type.Nom_sous_type, type_trouble.Nom_type_trouble from patient\n" + 
+    	String sql3 = "Select troubles.Code_CIM, troubles.Nom_commun, sous_type.Nom_sous_type, type_trouble.Nom_type_trouble, Consigner.DateEntreeConsigner from patient\n" + 
     			"inner join passeport_biomed using (IDPasseport_biomed)\n" + 
     			"inner join consigner using (IDPasseport_biomed)\n" + 
     			"inner join troubles using (IDTrouble)\n" + 
@@ -255,6 +277,7 @@ public class PatientOverviewController
 			
 			resultSet = preparedStatement.executeQuery();
 			
+			
 			if(resultSet.next())
 			{
 				nomLabel.setText(resultSet.getString("Nom"));
@@ -264,6 +287,7 @@ public class PatientOverviewController
 				codePosLabel.setText(resultSet.getString("Code_postal"));
 				villeLabel.setText(resultSet.getString("Localite"));
 				phoneLabel.setText(resultSet.getString("Telephone"));
+				birthdayLabel.setText(resultSet.getString("Date_naissance"));
 				paysLabel.setText(resultSet.getString("Pays"));
 				sexeLabel.setText(resultSet.getString("Sexe"));
 				iceNomLabel.setText(resultSet.getString("ICE_nom"));
@@ -271,6 +295,7 @@ public class PatientOverviewController
 				
 				preparedStatement =(PreparedStatement) connect.prepareStatement(sql2);
 				preparedStatement.setString(1, loadedPassbiomedID);
+			
 				
 				resultSet = preparedStatement.executeQuery();
 				while(resultSet.next())
@@ -281,6 +306,7 @@ public class PatientOverviewController
 					
 					medicamentData.add(tempMedicament);
 				}
+				
 				medicamentTable.setItems(medicamentData);
 				
 				preparedStatement =(PreparedStatement) connect.prepareStatement(sql3);
@@ -295,9 +321,21 @@ public class PatientOverviewController
 					tempTrouble.setSousType(resultSet.getString("Nom_sous_type"));
 					tempTrouble.setMasterType(resultSet.getString("Nom_type_trouble"));
 					
+//					String dateEssai = resultSet.getDate("DateEntreeConsigner").toString();
+					
+					Date date = resultSet.getDate("DateEntreeConsigner");
+					DateFormat df = new SimpleDateFormat("dd/MM/YYYY");
+					String dateFinal = df.format(date);
+					System.out.println(dateFinal);
+								
+//					System.out.println(dateEssai);
+								
+					tempTrouble.setDateConsigner(dateFinal);
+					
 					troubleData.add(tempTrouble);
 				}
 				troubleTable.setItems(troubleData);
+				
 				/*
 				preparedStatement =(PreparedStatement) connect.prepareStatement(sql4);
 				preparedStatement.setString(1, loadedPassbiomedID);
@@ -315,7 +353,7 @@ public class PatientOverviewController
 			}
 			else
 			{
-				System.out.println("Patient non-trouv�");
+				System.out.println("Patient non-trouve");
 			}
 			
 			

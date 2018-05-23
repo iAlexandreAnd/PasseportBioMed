@@ -17,14 +17,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="578.0" minWidth="800.0" prefHeight="597.0" prefWidth="1072.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="passbiomed.view.PatientOverviewController">
+<AnchorPane minHeight="578.0" minWidth="800.0" prefHeight="597.0" prefWidth="1072.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="passbiomed.view.PatientOverviewController">
    <children>
       <ImageView fitHeight="597.0" fitWidth="1072.0" layoutX="870.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@../../../Ressources/Wallpaper/150212174154-anchor-background-super-169.jpg" />
          </image>
       </ImageView>
-      <AnchorPane layoutX="424.0" layoutY="14.0" prefHeight="298.0" prefWidth="638.0" style="-fx-background-color: #882E25#882E25; -fx-border-color: #CA8A32#CA8A32; -fx-border-width: 3; -fx-border-radius: 6; -fx-background-radius: 10;" AnchorPane.leftAnchor="424.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <AnchorPane layoutX="424.0" layoutY="14.0" prefHeight="298.0" prefWidth="638.0" style="-fx-background-color: #882E25#882E25; -fx-border-color: #CA8A32#CA8A32; -fx-border-width: 2; -fx-border-radius: 6; -fx-background-radius: 10;" AnchorPane.leftAnchor="424.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <children>
             <GridPane alignment="CENTER" layoutX="19.0" layoutY="18.0" prefHeight="270.0" prefWidth="348.0" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="18.0">
               <columnConstraints>
@@ -99,7 +99,7 @@
             </GridPane>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="14.0" layoutY="13.0" prefHeight="256.0" prefWidth="336.0" style="-fx-background-color: #882E25#882E25; -fx-border-color: #CA8A32#CA8A32; -fx-border-width: 3; -fx-border-radius: 6; -fx-background-radius: 10;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <AnchorPane layoutX="14.0" layoutY="13.0" prefHeight="256.0" prefWidth="336.0" style="-fx-background-color: #882E25#882E25; -fx-border-color: #CA8A32#CA8A32; -fx-border-width: 2; -fx-border-radius: 6; -fx-background-radius: 10;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
          <children>
             <GridPane layoutX="51.0" layoutY="23.0" prefHeight="147.0" prefWidth="262.0" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="23.0">
               <columnConstraints>
@@ -119,7 +119,7 @@
             <Button layoutX="263.0" layoutY="172.0" mnemonicParsing="false" onAction="#handleOk" text="Charger" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" />
          </children>
       </AnchorPane>
-      <TabPane layoutX="10.0" layoutY="315.0" prefHeight="235.0" prefWidth="1072.0" style="-fx-border-color: #CA8A32#CA8A32; -fx-border-width: 3; -fx-border-radius: 4;" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+      <TabPane layoutX="10.0" layoutY="315.0" prefHeight="235.0" prefWidth="1072.0" style="-fx-border-color: #CA8A32#CA8A32; -fx-border-width: 2; -fx-border-radius: 4;" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
         <tabs>
           <Tab text="Pathologies">
             <content>
@@ -140,7 +140,8 @@
                                   <TableColumn fx:id="nomCommunColonne" prefWidth="111.0" text="Nom Commun" />
                                     <TableColumn fx:id="masterTypeColonne" prefWidth="219.0" text="Type" />
                                     <TableColumn fx:id="sousTypeColonne" prefWidth="191.0" text="Sous-type" />
-                                    <TableColumn prefWidth="123.0" text="Date Consignation" />
+                                    <TableColumn fx:id="dateConsignerColonne" prefWidth="123.0" text="Date Consignation" />
+                                    <TableColumn fx:id="flagImportance" prefWidth="123.0" text="Important" />
                                 </columns>
                               </TableView>
                               <GridPane prefHeight="95.0" prefWidth="48.0" GridPane.columnIndex="1">
@@ -278,7 +279,7 @@
         </tabs>
       </TabPane>
       <VBox layoutX="870.0" layoutY="42.0" prefHeight="0.0" prefWidth="0.0" />
-      <JFXButton fx:id="retourButton" buttonType="RAISED" ellipsisString="" layoutX="333.0" layoutY="557.0" onAction="#handleRetour" prefHeight="27.0" prefWidth="406.0" style="-fx-background-color: #2E457F#2E457F; -fx-background-radius: 40; -fx-border-color: #CA8A32#CA8A32; -fx-border-width: 2; -fx-border-radius: 40;" text="Retour au menu" textFill="WHITE" underline="true">
+      <JFXButton fx:id="retourButton" buttonType="RAISED" ellipsisString="" layoutX="333.0" layoutY="557.0" onAction="#handleRetour" prefHeight="27.0" prefWidth="406.0" style="-fx-background-color: #2E457F#2E457F; -fx-background-radius: 40; -fx-border-color: #CA8A32#CA8A32; -fx-border-width: 1; -fx-border-radius: 40;" text="Retour au menu" textFill="WHITE" underline="true">
          <font>
             <Font size="14.0" />
          </font>
