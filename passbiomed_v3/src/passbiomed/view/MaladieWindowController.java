@@ -3,6 +3,9 @@ package passbiomed.view;
 import java.net.URL;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -50,7 +53,8 @@ public class MaladieWindowController implements Initializable
     private TableColumn<Trouble, String> sousTypeColonne;
     @FXML
     private TableColumn<Trouble, String> masterTypeColonne;
-    
+    @FXML
+    private TableColumn<Trouble, String> flagImportance;
     
     @FXML
     private Label labelTest;
@@ -80,21 +84,27 @@ public class MaladieWindowController implements Initializable
 //			   +"-fx-border-width: 0px 4px 4px 4px";
 //	   
     
-    public void setPassBioMedID(String id) {
+    public void setPassBioMedID(String id) 
+    {
     	this.loadedPassbiomedID = id;
     }
     
     @Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
+	public void initialize(URL arg0, ResourceBundle arg1) 
+    {
+    	masterTypeColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("masterType"));
     	nomUniverselColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("nomUniversel"));
     	nomCommunColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("nomCommun"));
     	sousTypeColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("sousType"));
-    	masterTypeColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("masterType"));
+    	
+    
     	
     	displayData();	
-		labelTest.setText(loadedPassbiomedID);
+		
+    	labelTest.setText(loadedPassbiomedID);
+    		
+    	TextFields.bindAutoCompletion(filterField, troubleDataString);
     	
-		TextFields.bindAutoCompletion(filterField, troubleDataString);
 	}
 	  /*@FXML
 	  private void initialize() 
@@ -110,10 +120,9 @@ public class MaladieWindowController implements Initializable
 		  	
 	  }*/
 	  
-	  private void displayData() {
-		  
-		  
-		  Trouble tempTrouble;
+	  private void displayData() 
+	  {
+		    Trouble tempTrouble;
 		  try {
 		  	Class.forName("com.mysql.jdbc.Driver");
 			System.out.println("Driver OK");
@@ -188,7 +197,9 @@ public class MaladieWindowController implements Initializable
 	  @FXML
 	  private void handleAddTrouble()
 	  {
-		   try {
+		   try 
+		   {
+			
 		  	Trouble temptrouble = troubleTable.getSelectionModel().getSelectedItem();
 		    System.out.println(temptrouble.getNomUniversel());
 		    System.out.print("ID : ");
@@ -222,20 +233,35 @@ public class MaladieWindowController implements Initializable
 			
 			System.out.println("Assignation troubleID OK");
 			
-			String sql2 = "INSERT INTO `passbiomed_v3`.`consigner` (`Actif`, `Important`, `IDPasseport_biomed`, `IDTrouble`) VALUES ('0', '0', ?, ?);";
+//			LocalDate localDat = LocalDate.now();
+//			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY/MM/dd");
+//			String formattedDate = localDat.format(dtf);
+//			
+//			java.util.Date currentDate = Calendar.getInstance().getTime();
+
+			// java.sql.Date
+			Calendar calendar = Calendar.getInstance();
+			java.sql.Date ourJavaDateObject = new java.sql.Date(calendar.getTime().getTime());
+
+//			System.out.println("Date actuelle: "+formattedDate);
+			
+			String sql2 = "INSERT INTO `passbiomed_v3`.`consigner` (`Actif`, `Important`, `IDPasseport_biomed`, `IDTrouble`, `DateEntreeConsigner`) VALUES ('0', '0', ?,?,?);";
 			PreparedStatement prepStat3 =(PreparedStatement) connect.prepareStatement(sql2);
 			prepStat3.setString(1, loadedPassbiomedID);
 			prepStat3.setInt(2, troubleID);
+			prepStat3.setDate(3, ourJavaDateObject);
 			
 			prepStat3.executeUpdate();
 			
 			//INSERT INTO `passbiomed_v3`.`consigner` (`Actif`, `Important`, `IDPasseport_biomed`, `IDTrouble`) VALUES ('0', '0', '2', '5');
 
 			
-		   }catch (Exception e) {
+			
+		   }catch (Exception e) 
+		   {
 				e.printStackTrace();
-		}
-		
+		   }
+		  
 		Stage stage =(Stage) addToPatient.getScene().getWindow();
 		
 		stage.close();

@@ -8,33 +8,48 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.CheckBox;
 
-public class Trouble {
+public class Trouble 
+{
+	
 	private final StringProperty nomUniversel;
 	private final StringProperty nomCommun;
 	private final StringProperty sousType;
 	private final StringProperty masterType;
+	private final StringProperty dateConsigner;
+	private CheckBox important;
+	private CheckBox actif;
 	
-	public Trouble() {
-		this(null,null,null,null);
+	public Trouble() 
+	{
+		this(null,null,null,null,null);
 	}
 	
-	public Trouble(String nomUniversel, String nomCommun, String sousType, String masterType) {
+
+	public Trouble(String nomUniversel, String nomCommun, String sousType, String masterType, String dateConsigner) 
+	{
 		this.nomUniversel = new SimpleStringProperty(nomUniversel);
 	    this.nomCommun = new SimpleStringProperty(nomCommun);
 	    this.sousType = new SimpleStringProperty(sousType);
 	    this.masterType = new SimpleStringProperty(masterType);
+	    this.dateConsigner = new SimpleStringProperty(dateConsigner);
+	    this.important = new CheckBox();
+	    this.actif = new CheckBox();
 	}
 	
-	public String getNomUniversel() {
+	public String getNomUniversel() 
+	{
         return this.nomUniverselProperty().get();
     }
 
-    public void setNomUniversel(String nomUniversel) {
+    public void setNomUniversel(String nomUniversel) 
+    {
         this.nomUniversel.set(nomUniversel);
     }
 
-    public StringProperty nomUniverselProperty() {
+    public StringProperty nomUniverselProperty() 
+    {
         return nomUniversel;
     }
 	
@@ -63,8 +78,7 @@ public class Trouble {
     public StringProperty sousTypeProperty() {
         return sousType;
     }
-    
-    
+        
     public String getMasterType() {
         return this.masterTypeProperty().get();
     }
@@ -76,4 +90,41 @@ public class Trouble {
     public StringProperty masterTypeProperty() {
         return masterType;
     }
+    
+    public String getDateConsigner() 
+    {
+        return this.dateConsignerProperty().get();
+    }
+
+    public void setDateConsigner(String dateConsigner) 
+    {
+        this.dateConsigner.set(dateConsigner);
+    }
+
+    public StringProperty dateConsignerProperty() 
+    {
+        return dateConsigner;
+    }
+
+	public CheckBox getImportant() 
+	{
+		return important;
+	}
+
+	public void setImportant(CheckBox important) 
+	{
+		this.important = important;
+	}
+
+
+	public CheckBox getActif() 
+	{
+		return actif;
+	}
+
+
+	public void setActif(CheckBox actif) 
+	{
+		this.actif = actif;
+	}
 }

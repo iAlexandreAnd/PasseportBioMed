@@ -2,10 +2,17 @@ package passbiomed.view;
 
 
 
+import java.awt.Checkbox;
 import java.awt.TextField;
 import java.io.IOException;
+import java.security.KeyStore.ProtectionParameter;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalQuery;
+import java.util.Date;
 
 import com.jfoenix.controls.JFXTextField;
 import com.mysql.jdbc.Connection;
@@ -19,6 +26,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -53,6 +61,13 @@ public class PatientOverviewController
     private TableColumn<Trouble, String> sousTypeColonne;
     @FXML
     private TableColumn<Trouble, String> masterTypeColonne;
+    @FXML
+    private TableColumn<Trouble, String> dateConsignerColonne;
+    @FXML
+    private TableColumn<Trouble, String> flagImportance;
+    @FXML
+    private TableColumn<Trouble, String> flagActif;
+    
 
     
     @FXML
@@ -117,6 +132,7 @@ public class PatientOverviewController
     private void initialize() {
     	loadedPatientID = "0";
     	loadedPassbiomedID = "0";
+    	
     	//Tableview de medicament
     	nomChimiqueColonne.setCellValueFactory(new PropertyValueFactory<Medicament, String>("nomChimique"));
     	nomMedicamentUniColonne.setCellValueFactory(new PropertyValueFactory<Medicament, String>("nomUniversel"));
@@ -127,19 +143,28 @@ public class PatientOverviewController
     	nomCommunColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("nomCommun"));
     	sousTypeColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("sousType"));
     	masterTypeColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("masterType"));
+    	dateConsignerColonne.setCellValueFactory(new PropertyValueFactory<Trouble, String>("dateConsigner"));
+    	flagImportance.setCellValueFactory(new PropertyValueFactory<Trouble, String>("important"));
+    	flagActif.setCellValueFactory(new PropertyValueFactory<Trouble, String>("actif"));
     	
-    	//Tableview d'opération et traitement
+    	
+    	flagImportance.setStyle("-fx-alignment: CENTER;");
+    	flagActif.setStyle("-fx-alignment: CENTER;");
+    	
+    	//Tableview d'opï¿½ration et traitement
     	nomOperationColonne.setCellValueFactory(new PropertyValueFactory<Operation, String>("nomOperation"));
     	commentaireOpColonne.setCellValueFactory(new PropertyValueFactory<Operation, String>("commentaire"));
     }
     
     
     @FXML
-    private void handleOk() {
+    private void handleOk() 
+    {
     	
     	String nomFieldS = this.nomField.getText();
     	String prenomFieldS = this.prenomField.getText();
-        if (isInputValid()) {
+        if (isInputValid()) 
+        {
         	
         	String sql = "SELECT * FROM Patient WHERE Nom = ? and Prenom = ?";
     		try {
@@ -161,18 +186,18 @@ public class PatientOverviewController
     			
     			if(resultSet.next())
     			{
-    				System.out.println("Patient trouvé");
+    				System.out.println("Patient trouve");
     				loadedPatientID=resultSet.getString(1);
     				loadedPassbiomedID=resultSet.getString("IDpasseport_biomed");
     				displayData();
     			}
     			else
     			{
-    				System.out.println("Patient non-trouvé");
+    				System.out.println("Patient non-trouvï¿½");
     				Alert alert = new Alert(AlertType.ERROR);
     	            alert.setTitle("Erreur");
     	            alert.setHeaderText("Erreur");
-    	            alert.setContentText("Patient n'a pas été trouvé");
+    	            alert.setContentText("Patient n'a pas ï¿½tï¿½ trouvï¿½");
     	            alert.showAndWait();
     			}
     			
@@ -227,7 +252,7 @@ public class PatientOverviewController
     			"inner join repertorier using(IDPasseport_biomed)\n" + 
     			"inner join medicament using(IDMedicament)\n" + 
     			"where IDPasseport_biomed=? ;";
-    	String sql3 = "Select troubles.Code_CIM, troubles.Nom_commun, sous_type.Nom_sous_type, type_trouble.Nom_type_trouble from patient\n" + 
+    	String sql3 = "Select troubles.Code_CIM, troubles.Nom_commun, sous_type.Nom_sous_type, type_trouble.Nom_type_trouble, Consigner.DateEntreeConsigner, Consigner.Important, Consigner.Actif from patient\n" + 
     			"inner join passeport_biomed using (IDPasseport_biomed)\n" + 
     			"inner join consigner using (IDPasseport_biomed)\n" + 
     			"inner join troubles using (IDTrouble)\n" + 
@@ -255,6 +280,7 @@ public class PatientOverviewController
 			
 			resultSet = preparedStatement.executeQuery();
 			
+			
 			if(resultSet.next())
 			{
 				nomLabel.setText(resultSet.getString("Nom"));
@@ -264,6 +290,7 @@ public class PatientOverviewController
 				codePosLabel.setText(resultSet.getString("Code_postal"));
 				villeLabel.setText(resultSet.getString("Localite"));
 				phoneLabel.setText(resultSet.getString("Telephone"));
+				birthdayLabel.setText(resultSet.getString("Date_naissance"));
 				paysLabel.setText(resultSet.getString("Pays"));
 				sexeLabel.setText(resultSet.getString("Sexe"));
 				iceNomLabel.setText(resultSet.getString("ICE_nom"));
@@ -271,6 +298,7 @@ public class PatientOverviewController
 				
 				preparedStatement =(PreparedStatement) connect.prepareStatement(sql2);
 				preparedStatement.setString(1, loadedPassbiomedID);
+			
 				
 				resultSet = preparedStatement.executeQuery();
 				while(resultSet.next())
@@ -281,6 +309,7 @@ public class PatientOverviewController
 					
 					medicamentData.add(tempMedicament);
 				}
+				
 				medicamentTable.setItems(medicamentData);
 				
 				preparedStatement =(PreparedStatement) connect.prepareStatement(sql3);
@@ -295,9 +324,65 @@ public class PatientOverviewController
 					tempTrouble.setSousType(resultSet.getString("Nom_sous_type"));
 					tempTrouble.setMasterType(resultSet.getString("Nom_type_trouble"));
 					
+//					String dateEssai = resultSet.getDate("DateEntreeConsigner").toString();
+					
+					Date date = resultSet.getDate("DateEntreeConsigner");
+					DateFormat df = new SimpleDateFormat("dd/MM/YYYY");
+					String dateFinal = df.format(date);
+					System.out.println(dateFinal);
+					CheckBox essai = new CheckBox();
+					
+					int flagImportance = resultSet.getInt("Important");
+					
+					if(flagImportance == 1) 
+					{	
+						System.out.println("");
+						System.out.println("*******************");
+						System.out.println("Nom: "+tempTrouble.getNomCommun());
+						System.out.println("Bool retournÃ©: "+flagImportance);
+						System.out.println("*******************");
+						
+						boolean checkboxSelection = true;
+						essai.setSelected(checkboxSelection);
+					}
+					else 
+					{
+						System.out.println("");
+						System.out.println("*******************");
+						System.out.println("Nom: "+tempTrouble.getNomCommun());
+						System.out.println("Bool retournÃ©: "+flagImportance);
+						System.out.println("*******************");
+						
+						boolean checkboxSelection = false;
+						essai.setSelected(checkboxSelection);
+						
+					}
+					
+					CheckBox actif = new CheckBox();
+					int flagActif = resultSet.getInt("Actif");
+					
+					System.out.println("Flag actif: "+flagActif);
+					
+					
+					if(flagActif == 1) 
+					{
+						boolean checkBoxActif = true;
+						actif.setSelected(checkBoxActif);
+					}
+					else 
+					{
+						boolean checkBoxActif = false;
+						actif.setSelected(checkBoxActif);
+					}
+
+					tempTrouble.setImportant(essai);				
+					tempTrouble.setActif(actif);
+					tempTrouble.setDateConsigner(dateFinal);
+					
 					troubleData.add(tempTrouble);
 				}
 				troubleTable.setItems(troubleData);
+				
 				/*
 				preparedStatement =(PreparedStatement) connect.prepareStatement(sql4);
 				preparedStatement.setString(1, loadedPassbiomedID);
@@ -315,7 +400,7 @@ public class PatientOverviewController
 			}
 			else
 			{
-				System.out.println("Patient non-trouvé");
+				System.out.println("Patient non-trouve");
 			}
 			
 			
@@ -372,8 +457,6 @@ public class PatientOverviewController
     		    
     		    MaladieWindowController controller = fxmlLoader.<MaladieWindowController>getController();
     		    controller.setPassBioMedID(loadedPassbiomedID);
-    		    
-    		    
     		    
     		    Scene scene = new Scene(root);
     		    
@@ -461,7 +544,7 @@ public class PatientOverviewController
 	    		Scene scene = new Scene(fxmlLoader.load());
 	    		Stage stage = new Stage();
 	    		
-	    		stage.setTitle("Ajout d'un médicament");
+	    		stage.setTitle("Ajout d'un mï¿½dicament");
 	    		stage.setScene(scene);
 	    		stage.centerOnScreen();
 	    		stage.initModality(Modality.APPLICATION_MODAL);
