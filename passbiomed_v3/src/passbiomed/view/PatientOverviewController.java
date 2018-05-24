@@ -4,6 +4,8 @@ package passbiomed.view;
 
 import java.awt.Checkbox;
 import java.awt.TextField;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.KeyStore.ProtectionParameter;
 import java.sql.DriverManager;
@@ -33,6 +35,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.skin.TextFieldSkin;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -94,42 +98,64 @@ public class PatientOverviewController
     private JFXTextField prenomField;
     
     @FXML
-    private Label nomLabel;
+    private AnchorPane paneInfoPatient;
+    
+    /*deuxieme vague*/
+    
+    
     @FXML
-    private Label prenomLabel;
+    private JFXTextField nomLabel2; 
+
     @FXML
-    private Label grpSanLabel;
+    private JFXTextField prenomLabel2;
+
     @FXML
-    private Label adresseLabel;
+    private JFXTextField grpSanLabel2;
+
     @FXML
-    private Label codePosLabel;
+    private JFXTextField adresseLabel2;
+
     @FXML
-    private Label villeLabel;
+    private JFXTextField codePosLabel2;
+
     @FXML
-    private Label phoneLabel;
+    private JFXTextField villeLabel2;
+
     @FXML
-    private Label birthdayLabel;
+    private JFXTextField phoneLabel2;
+
     @FXML
-    private Label paysLabel;
+    private JFXTextField birthdayLabel2;
+    
     @FXML
-    private Label sexeLabel;
+    private JFXTextField paysLabel2;
+
     @FXML
-    private Label iceNomLabel;
+    private JFXTextField sexeLabel2;
+
     @FXML
-    private Label iceTelephoneLabel;
+    private JFXTextField iceNomLabel2;
+
+    @FXML
+    private JFXTextField iceTelephoneLabel2;
+    
+    @FXML
+    private Button buttonTest;
     
     @FXML
     private Button retourButton;
     
     private MainApp mainApp;
     
-    public PatientOverviewController() {
+    public PatientOverviewController() 
+    {
     	
     	
     }
     
     @FXML
-    private void initialize() {
+    private void initialize() 
+    {
     	loadedPatientID = "0";
     	loadedPassbiomedID = "0";
     	
@@ -147,13 +173,31 @@ public class PatientOverviewController
     	flagImportance.setCellValueFactory(new PropertyValueFactory<Trouble, String>("important"));
     	flagActif.setCellValueFactory(new PropertyValueFactory<Trouble, String>("actif"));
     	
-    	
-    	flagImportance.setStyle("-fx-alignment: CENTER;");
-    	flagActif.setStyle("-fx-alignment: CENTER;");
-    	
     	//Tableview d'op�ration et traitement
     	nomOperationColonne.setCellValueFactory(new PropertyValueFactory<Operation, String>("nomOperation"));
     	commentaireOpColonne.setCellValueFactory(new PropertyValueFactory<Operation, String>("commentaire"));
+    	
+    	paneInfoPatient.setDisable(true);
+    flagImportance.setStyle("-fx-alignment: CENTER;");
+    	flagActif.setStyle("-fx-alignment: CENTER;");
+    	
+    	FileInputStream input = null;
+		try 
+		{
+			input = new FileInputStream("Ressources/Icons/006-signs.png");
+		} 
+		catch (FileNotFoundException e) 
+		{
+			e.printStackTrace();
+		}
+    Image image = new Image(input);
+    ImageView imageView = new ImageView(image);
+    
+    buttonTest.setGraphic(imageView);
+    
+
+//    Button button = new Button("Home", imageView);
+    	
     }
     
     
@@ -283,18 +327,21 @@ public class PatientOverviewController
 			
 			if(resultSet.next())
 			{
-				nomLabel.setText(resultSet.getString("Nom"));
-				prenomLabel.setText(resultSet.getString("Prenom"));
-				grpSanLabel.setText(resultSet.getString("Groupe_sanguin"));
-				adresseLabel.setText(resultSet.getString("Adresse"));
-				codePosLabel.setText(resultSet.getString("Code_postal"));
-				villeLabel.setText(resultSet.getString("Localite"));
-				phoneLabel.setText(resultSet.getString("Telephone"));
-				birthdayLabel.setText(resultSet.getString("Date_naissance"));
-				paysLabel.setText(resultSet.getString("Pays"));
-				sexeLabel.setText(resultSet.getString("Sexe"));
-				iceNomLabel.setText(resultSet.getString("ICE_nom"));
-				iceTelephoneLabel.setText(resultSet.getString("ICE_telephone"));
+			
+				nomLabel2.setText(resultSet.getString("Nom"));
+				prenomLabel2.setText(resultSet.getString("Prenom"));
+				grpSanLabel2.setText(resultSet.getString("Groupe_sanguin"));
+				adresseLabel2.setText(resultSet.getString("Adresse"));
+				codePosLabel2.setText(resultSet.getString("Code_postal"));
+				villeLabel2.setText(resultSet.getString("Localite"));
+				phoneLabel2.setText(resultSet.getString("Telephone"));
+				birthdayLabel2.setText(resultSet.getString("Date_naissance"));
+				paysLabel2.setText(resultSet.getString("Pays"));
+				sexeLabel2.setText(resultSet.getString("Sexe"));
+				iceNomLabel2.setText(resultSet.getString("ICE_nom"));
+				iceTelephoneLabel2.setText(resultSet.getString("ICE_telephone"));
+				
+				
 				
 				preparedStatement =(PreparedStatement) connect.prepareStatement(sql2);
 				preparedStatement.setString(1, loadedPassbiomedID);

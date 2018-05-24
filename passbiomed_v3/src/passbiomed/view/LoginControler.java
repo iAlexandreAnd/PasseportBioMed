@@ -21,7 +21,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import com.jfoenix.controls.JFXButton;
@@ -59,6 +63,8 @@ public class LoginControler
 	    @FXML
 	    private JFXComboBox<String> typeConnexion;
 	    
+	    @FXML
+	    private AnchorPane PaneEssai;
 
 
 	  @FXML
@@ -67,6 +73,9 @@ public class LoginControler
 //		  typeConnexion.setValue("Type Connexion");
 		  typeConnexion.setItems(typeConnctList);	
 		  typeConnexion.setPromptText("Connexion type");
+		  
+//		  PaneEssai.setDisable(true);
+
 	  }
 
     
@@ -91,7 +100,7 @@ public class LoginControler
     
     int getData() 
     {
-    	return data;
+    		return data;
     }
     
     @FXML
