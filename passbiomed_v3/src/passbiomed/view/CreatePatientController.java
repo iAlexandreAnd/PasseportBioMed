@@ -567,7 +567,7 @@ public class CreatePatientController
     				IDlog = recupIdLogin(identifiant);
     				IdPassbiomed = recupIdPassBiomed(RN);
     				
-    				// Affichiage de v�rification de la r�cup des ID.
+    				// Affichiage de verification de la recup des ID.
     				System.out.println(IDlog);
     				System.out.println(IdPassbiomed);
     				
@@ -599,7 +599,7 @@ public class CreatePatientController
     				Alert alertos = new Alert(AlertType.INFORMATION);
             		alertos.setTitle("Succes");
             		alertos.setHeaderText("Succes");
-            		alertos.setContentText("La creation s'est d�roul�e correctement.");
+            		alertos.setContentText("La creation s'est deroulee correctement.");
             		alertos.showAndWait(); 		
     				
     			}catch (Exception e) 
@@ -607,7 +607,7 @@ public class CreatePatientController
     				Alert alertis = new Alert(AlertType.ERROR);
             		alertis.setTitle("Erreur");
             		alertis.setHeaderText("Erreur");
-            		alertis.setContentText("Une erreur est survenue lors de l'ajout dans la base de donn�es.");
+            		alertis.setContentText("Une erreur est survenue lors de l'ajout dans la base de donnees.");
             		alertis.showAndWait(); 
     				
             		e.printStackTrace();

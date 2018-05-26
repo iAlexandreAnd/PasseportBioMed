@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalQuery;
 import java.util.Date;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -38,6 +39,12 @@ import javafx.scene.control.skin.TextFieldSkin;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import passbiomed.MainApp;
@@ -140,7 +147,17 @@ public class PatientOverviewController
     private JFXTextField iceTelephoneLabel2;
     
     @FXML
-    private Button buttonTest;
+    private GridPane editGridPatient;
+    
+    @FXML
+    private JFXButton buttonEdit1;
+    
+    @FXML
+    private JFXButton buttonEdit2;
+    
+    @FXML
+    private JFXButton buttonEdit3;
+   
     
     @FXML
     private Button retourButton;
@@ -173,33 +190,129 @@ public class PatientOverviewController
     	flagImportance.setCellValueFactory(new PropertyValueFactory<Trouble, String>("important"));
     	flagActif.setCellValueFactory(new PropertyValueFactory<Trouble, String>("actif"));
     	
-    	//Tableview d'op�ration et traitement
+    	//Tableview d'operation et traitement
     	nomOperationColonne.setCellValueFactory(new PropertyValueFactory<Operation, String>("nomOperation"));
     	commentaireOpColonne.setCellValueFactory(new PropertyValueFactory<Operation, String>("commentaire"));
-    	
-    	paneInfoPatient.setDisable(true);
+
     flagImportance.setStyle("-fx-alignment: CENTER;");
     	flagActif.setStyle("-fx-alignment: CENTER;");
     	
-    	FileInputStream input = null;
-		try 
-		{
-			input = new FileInputStream("Ressources/Icons/006-signs.png");
-		} 
-		catch (FileNotFoundException e) 
-		{
-			e.printStackTrace();
-		}
-    Image image = new Image(input);
-    ImageView imageView = new ImageView(image);
+//    //////////////////////////////////////////////////////////////// 
+//    	//boutton 1	
+//    	FileInputStream input = null;
+//		try 
+//		{
+//			input = new FileInputStream("Ressources/Icons/007-cogwheel.png");
+//		} 
+//		catch (FileNotFoundException e) 
+//		{
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//    
+//	
+//	Image image = new Image(input);
+//    ImageView imageView = new ImageView(image);
+//    imageView.setFitWidth(30);
+//    imageView.setPreserveRatio(true);
+//    imageView.setSmooth(true);
+//    imageView.setCache(true); 
+//   
+//    buttonEdit1.setGraphic(imageView);
+//    
+//    ////////////////////////////////////////////////////////////////   
+//    //boutton 1	
+//    FileInputStream input2 = null;
+//	try 
+//	{
+//		input2 = new FileInputStream("Ressources/Icons/005-check-1.png");
+//	} 
+//	catch (FileNotFoundException e) 
+//	{
+//		// 
+//		e.printStackTrace();
+//	}
+//
+//	
+//	Image image2 = new Image(input2);
+//	ImageView imageView2 = new ImageView(image2);
+//	imageView2.setFitWidth(30);
+//	imageView2.setPreserveRatio(true);
+//	imageView2.setSmooth(true);
+//	imageView2.setCache(true); 
+//
+//	buttonEdit2.setGraphic(imageView2);
+//	
+	////////////////////////////////////////////////////////////////
     
-    buttonTest.setGraphic(imageView);
-    
-
-//    Button button = new Button("Home", imageView);
+    	
+    	initTextFildsClosed();
+    	
     	
     }
     
+    void initTextFildsClosed() 
+    {
+    	
+       nomLabel2.setEditable(false);
+       prenomLabel2.setEditable(false);
+       grpSanLabel2.setEditable(false);
+       adresseLabel2.setEditable(false);
+       codePosLabel2.setEditable(false);
+       villeLabel2.setEditable(false);
+       phoneLabel2.setEditable(false);
+       birthdayLabel2.setEditable(false);
+       paysLabel2.setEditable(false);
+       sexeLabel2.setEditable(false);
+       iceNomLabel2.setEditable(false);
+       iceTelephoneLabel2.setEditable(false);
+       buttonEdit2.setVisible(false);
+       buttonEdit3.setVisible(false);
+       
+    }
+   
+    @FXML
+    void editPatientOn() 
+    {
+    		nomLabel2.setEditable(true);
+        prenomLabel2.setEditable(true);
+        grpSanLabel2.setEditable(true);
+        adresseLabel2.setEditable(true);
+        codePosLabel2.setEditable(true);
+        villeLabel2.setEditable(true);
+        phoneLabel2.setEditable(true);
+        birthdayLabel2.setEditable(true);
+        paysLabel2.setEditable(true);
+        sexeLabel2.setEditable(true);
+        iceNomLabel2.setEditable(true);
+        iceTelephoneLabel2.setEditable(true);
+        buttonEdit2.setVisible(true);
+        buttonEdit3.setVisible(true);
+        buttonEdit1.setVisible(false);
+    	
+    }
+    
+    @FXML
+    void editPatientCancel() 
+    {
+    		nomLabel2.setEditable(false);
+        prenomLabel2.setEditable(false);
+        grpSanLabel2.setEditable(false);
+        adresseLabel2.setEditable(false);
+        codePosLabel2.setEditable(false);
+        villeLabel2.setEditable(false);
+        phoneLabel2.setEditable(false);
+        birthdayLabel2.setEditable(false);
+        paysLabel2.setEditable(false);
+        sexeLabel2.setEditable(false);
+        iceNomLabel2.setEditable(false);
+        iceTelephoneLabel2.setEditable(false);
+        buttonEdit2.setVisible(false);
+        buttonEdit3.setVisible(false);
+        buttonEdit1.setVisible(true);
+        
+        handleOk();
+    }
     
     @FXML
     private void handleOk() 
@@ -237,11 +350,11 @@ public class PatientOverviewController
     			}
     			else
     			{
-    				System.out.println("Patient non-trouv�");
+    				System.out.println("Patient non-trouve");
     				Alert alert = new Alert(AlertType.ERROR);
     	            alert.setTitle("Erreur");
     	            alert.setHeaderText("Erreur");
-    	            alert.setContentText("Patient n'a pas �t� trouv�");
+    	            alert.setContentText("Patient n'a pas ete trouve");
     	            alert.showAndWait();
     			}
     			
@@ -296,7 +409,7 @@ public class PatientOverviewController
     			"inner join repertorier using(IDPasseport_biomed)\n" + 
     			"inner join medicament using(IDMedicament)\n" + 
     			"where IDPasseport_biomed=? ;";
-    	String sql3 = "Select troubles.Code_CIM, troubles.Nom_commun, sous_type.Nom_sous_type, type_trouble.Nom_type_trouble, Consigner.DateEntreeConsigner, Consigner.Important, Consigner.Actif from patient\n" + 
+    	String sql3 = "Select troubles.Code_CIM, troubles.Nom_commun, sous_type.Nom_sous_type, type_trouble.Nom_type_trouble, Consigner.DateEntreeConsigner, Consigner.Important, Consigner.Actif, Consigner.IDConsigner from patient\n" + 
     			"inner join passeport_biomed using (IDPasseport_biomed)\n" + 
     			"inner join consigner using (IDPasseport_biomed)\n" + 
     			"inner join troubles using (IDTrouble)\n" + 
@@ -370,6 +483,9 @@ public class PatientOverviewController
 					tempTrouble.setNomCommun(resultSet.getString("Nom_commun"));
 					tempTrouble.setSousType(resultSet.getString("Nom_sous_type"));
 					tempTrouble.setMasterType(resultSet.getString("Nom_type_trouble"));
+					tempTrouble.setiDConsigner(resultSet.getInt("IDConsigner"));
+					
+					System.out.println("ID consigner: "+tempTrouble.getiDConsigner());
 					
 //					String dateEssai = resultSet.getDate("DateEntreeConsigner").toString();
 					

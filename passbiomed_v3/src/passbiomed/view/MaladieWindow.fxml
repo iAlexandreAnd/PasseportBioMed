@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -25,9 +26,9 @@
       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <AnchorPane fx:id="AnchorWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="876.0">
+      <AnchorPane fx:id="AnchorWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="643.0" prefWidth="876.0">
          <children>
-            <ImageView fitHeight="600.0" fitWidth="876.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <ImageView fitHeight="643.0" fitWidth="876.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <image>
                   <Image url="@../../../Ressources/Wallpaper/150212174154-anchor-background-super-169.jpg" />
                </image>
@@ -55,7 +56,7 @@
                         <Insets />
                      </opaqueInsets>
                   </JFXComboBox>
-                  <JFXButton fx:id="boutonRechercheMaladie" buttonType="RAISED" ellipsisString="" prefHeight="32.0" prefWidth="139.0" ripplerFill="#496ab8" style="-fx-background-color: #D22E2A#D22E2A; -fx-background-radius: 40;" text="Chercher" textFill="WHITE" underline="true" viewOrder="5.0" GridPane.rowIndex="2" />
+                  <JFXButton fx:id="boutonRechercheMaladie" buttonType="RAISED" ellipsisString="" prefHeight="32.0" prefWidth="266.0" ripplerFill="#496ab8" style="-fx-background-color: #D22E2A#D22E2A; -fx-background-radius: 40;" text="Chercher" textFill="WHITE" underline="true" viewOrder="5.0" GridPane.rowIndex="2" />
                </children>
             </GridPane>
             <Pane fx:id="paneHeaderPatho" layoutX="-3.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="38.0" prefWidth="607.0" style="-fx-background-color: #882E25 #882E25;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
@@ -67,7 +68,7 @@
                   </Label>
                </children>
             </Pane>
-            <TableView fx:id="troubleTable" layoutX="14.0" layoutY="258.0" prefHeight="297.0" prefWidth="856.0" style="-fx-border-color: #CA8A32#CA8A32; -fx-border-width: 2;" tableMenuButtonVisible="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+            <TableView fx:id="troubleTable" layoutX="14.0" layoutY="258.0" prefHeight="289.0" prefWidth="856.0" style="-fx-border-color: #CA8A32#CA8A32; -fx-border-width: 2;" tableMenuButtonVisible="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
               <columns>
                   <TableColumn fx:id="nomUniverselColonne" prefWidth="131.0" text="Code CIM-10" />
                   <TableColumn fx:id="nomCommunColonne" prefWidth="151.0" text="Nom commun" />
@@ -88,12 +89,22 @@
                   <Font size="17.0" />
                </font>
             </Label>
-            <JFXButton fx:id="addToPatient" buttonType="RAISED" ellipsisString="" layoutX="235.0" layoutY="561.0" onAction="#handleAddTrouble" prefHeight="27.0" prefWidth="406.0" style="-fx-background-color: #2E457F#2E457F; -fx-background-radius: 40; -fx-border-color: #CA8A32#CA8A32; -fx-border-width: 1; -fx-border-radius: 40;" text="Ajouter au patient" textFill="WHITE" underline="true">
+            <JFXButton fx:id="addToPatient" buttonType="RAISED" ellipsisString="" layoutX="235.0" layoutY="599.0" onAction="#handleAddTrouble" prefHeight="27.0" prefWidth="406.0" style="-fx-background-color: #2E457F#2E457F; -fx-background-radius: 40; -fx-border-color: #CA8A32#CA8A32; -fx-border-width: 1; -fx-border-radius: 40;" text="Ajouter au patient" textFill="WHITE" underline="true">
                <font>
                   <Font size="14.0" />
                </font>
             </JFXButton>
-            <Label fx:id="labelTest" layoutX="449.0" layoutY="81.0" text="ID vient ici" textFill="#f5f4f4" />
+            <Label fx:id="labelTest" layoutX="577.0" layoutY="101.0" text="ID vient ici" textFill="#f5f4f4" visible="false" />
+            <Label layoutX="171.0" layoutY="548.0" prefHeight="51.0" prefWidth="302.0" text="Indicateur de maladie importante: " textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="checkImportance" layoutX="453.0" layoutY="563.0" text="maladie importante." textFill="WHITE" unCheckedColor="RED">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </JFXCheckBox>
          </children>
       </AnchorPane>
    </children>

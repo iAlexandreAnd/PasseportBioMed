@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -19,6 +20,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -79,6 +81,12 @@ public class MaladieWindowController implements Initializable
     
     @FXML
     private JFXButton addToPatient;
+    
+    @FXML
+    private JFXCheckBox checkImportance;
+    
+    @FXML
+    private CheckBox checkImportance2;
 	  
 //	final String cssGrid = "-fx-border-color: #A0A0A0;" 
 //			   +"-fx-border-width: 0px 4px 4px 4px";
@@ -104,6 +112,8 @@ public class MaladieWindowController implements Initializable
     	labelTest.setText(loadedPassbiomedID);
     		
     	TextFields.bindAutoCompletion(filterField, troubleDataString);
+//    	checkImportance = new JFXCheckBox();
+//    	checkImportance2 = new CheckBox();
     	
 	}
 	  /*@FXML
@@ -233,6 +243,22 @@ public class MaladieWindowController implements Initializable
 			
 			System.out.println("Assignation troubleID OK");
 			
+
+			
+			int importantIsSelected = 0;
+			
+			if(checkImportance.isSelected() == true) 
+			{
+				importantIsSelected = 1;
+				System.out.println("Flag important: "+importantIsSelected);
+				
+			}
+			else 
+			{
+				importantIsSelected = 0;
+				System.out.println("Flag important: "+importantIsSelected);
+			}
+			
 //			LocalDate localDat = LocalDate.now();
 //			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY/MM/dd");
 //			String formattedDate = localDat.format(dtf);
@@ -245,11 +271,12 @@ public class MaladieWindowController implements Initializable
 
 //			System.out.println("Date actuelle: "+formattedDate);
 			
-			String sql2 = "INSERT INTO `passbiomed_v3`.`consigner` (`Actif`, `Important`, `IDPasseport_biomed`, `IDTrouble`, `DateEntreeConsigner`) VALUES ('0', '0', ?,?,?);";
+			String sql2 = "INSERT INTO `passbiomed_v3`.`consigner` (`Actif`, `Important`, `IDPasseport_biomed`, `IDTrouble`, `DateEntreeConsigner`) VALUES ('1', ?, ?,?,?);";
 			PreparedStatement prepStat3 =(PreparedStatement) connect.prepareStatement(sql2);
-			prepStat3.setString(1, loadedPassbiomedID);
-			prepStat3.setInt(2, troubleID);
-			prepStat3.setDate(3, ourJavaDateObject);
+			prepStat3.setInt(1, importantIsSelected);
+			prepStat3.setString(2, loadedPassbiomedID);
+			prepStat3.setInt(3, troubleID);
+			prepStat3.setDate(4, ourJavaDateObject);
 			
 			prepStat3.executeUpdate();
 			
