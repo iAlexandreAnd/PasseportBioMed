@@ -192,10 +192,11 @@
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="222.0" minWidth="10.0" prefWidth="142.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="34.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="34.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="29.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="29.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -218,6 +219,8 @@
                   <JFXTextField fx:id="villeLabel2" alignment="CENTER" prefHeight="27.0" prefWidth="268.0" stylesheets="@styleCss.css" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <JFXTextField fx:id="phoneLabel2" alignment="CENTER" prefHeight="27.0" prefWidth="268.0" stylesheets="@styleCss.css" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <JFXTextField fx:id="birthdayLabel2" alignment="CENTER" prefHeight="27.0" prefWidth="268.0" stylesheets="@styleCss.css" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="146.0" text="eMail" textFill="WHITE" GridPane.rowIndex="8" />
+                  <JFXTextField fx:id="emailLabel2" alignment="CENTER" prefHeight="27.0" prefWidth="268.0" stylesheets="@styleCss.css" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                </children>
             </GridPane>
             <GridPane layoutX="374.0" layoutY="5.0" prefHeight="113.0" prefWidth="258.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
@@ -274,11 +277,11 @@
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../Ressources/Icons/002-nut-icon.png" />
+                              <Image url="@../../../Ressources/Icons/003-cogwheel-2.png" />
                            </image>
                         </ImageView>
                      </graphic></JFXButton>
-                  <JFXButton fx:id="buttonEdit2" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="89.0" prefWidth="49.0" ripplerFill="WHITE" style="-fx-background-color: #2E803A#2E803A; -fx-background-radius: 30; -fx-border-color: #CA8A32#CA8A32; -fx-border-radius: 30; -fx-border-width: 2;" text=" " GridPane.rowIndex="1">
+                  <JFXButton fx:id="buttonEdit2" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onAction="#refreshInfoPatient" prefHeight="89.0" prefWidth="49.0" ripplerFill="WHITE" style="-fx-background-color: #2E803A#2E803A; -fx-background-radius: 30; -fx-border-color: #CA8A32#CA8A32; -fx-border-radius: 30; -fx-border-width: 2;" text=" " GridPane.rowIndex="1">
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -325,4 +328,3 @@
       </JFXButton>
    </children>
 </AnchorPane>
-

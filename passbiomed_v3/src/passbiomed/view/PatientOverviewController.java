@@ -50,6 +50,7 @@ import javafx.stage.Stage;
 import passbiomed.MainApp;
 import passbiomed.model.Medicament;
 import passbiomed.model.Operation;
+import passbiomed.model.Patient;
 import passbiomed.model.Trouble;
 
 public class PatientOverviewController 
@@ -145,6 +146,9 @@ public class PatientOverviewController
 
     @FXML
     private JFXTextField iceTelephoneLabel2;
+    
+    @FXML
+    private JFXTextField emailLabel2;
     
     @FXML
     private GridPane editGridPatient;
@@ -266,6 +270,7 @@ public class PatientOverviewController
        sexeLabel2.setEditable(false);
        iceNomLabel2.setEditable(false);
        iceTelephoneLabel2.setEditable(false);
+       emailLabel2.setEditable(false);
        buttonEdit2.setVisible(false);
        buttonEdit3.setVisible(false);
        
@@ -286,6 +291,7 @@ public class PatientOverviewController
         sexeLabel2.setEditable(true);
         iceNomLabel2.setEditable(true);
         iceTelephoneLabel2.setEditable(true);
+        emailLabel2.setEditable(true);
         buttonEdit2.setVisible(true);
         buttonEdit3.setVisible(true);
         buttonEdit1.setVisible(false);
@@ -307,6 +313,7 @@ public class PatientOverviewController
         sexeLabel2.setEditable(false);
         iceNomLabel2.setEditable(false);
         iceTelephoneLabel2.setEditable(false);
+        emailLabel2.setEditable(false);
         buttonEdit2.setVisible(false);
         buttonEdit3.setVisible(false);
         buttonEdit1.setVisible(true);
@@ -367,7 +374,8 @@ public class PatientOverviewController
     }
     
     
-    private boolean isInputValid() {
+    private boolean isInputValid() 
+    {
         String errorMessage = "";
 
         if (nomField == null) {
@@ -453,6 +461,8 @@ public class PatientOverviewController
 				sexeLabel2.setText(resultSet.getString("Sexe"));
 				iceNomLabel2.setText(resultSet.getString("ICE_nom"));
 				iceTelephoneLabel2.setText(resultSet.getString("ICE_telephone"));
+				emailLabel2.setText(resultSet.getString("Email"));
+				
 				
 				
 				
@@ -570,11 +580,116 @@ public class PatientOverviewController
 			preparedStatement.close();
 			resultSet.close();
 			
-		}catch (Exception e) {
+		}catch (Exception e) 
+		{
 			e.printStackTrace();
 		}
     }
     
+    private void refreshTabTroubles() 
+    {
+    	troubleData = FXCollections.observableArrayList();
+
+    	
+    	Trouble tempTrouble;
+
+    	String sql = "Select troubles.Code_CIM, troubles.Nom_commun, sous_type.Nom_sous_type, type_trouble.Nom_type_trouble, Consigner.DateEntreeConsigner, Consigner.Important, Consigner.Actif, Consigner.IDConsigner from patient\n" + 
+    			"inner join passeport_biomed using (IDPasseport_biomed)\n" + 
+    			"inner join consigner using (IDPasseport_biomed)\n" + 
+    			"inner join troubles using (IDTrouble)\n" + 
+    			"inner join sous_type using (IDSous_type)\n" + 
+    			"inner join type_trouble using(IDType_trouble)\n" +
+    			"where IDPasseport_biomed = ?;";
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			System.out.println("Driver OK");
+			
+			String url = "jdbc:mysql://localhost:3306/passbiomed_v3";
+			String user = "root";
+			String password = "Secret123";
+			
+			Connection connect = (Connection) DriverManager.getConnection(url, user, password);
+			ResultSet resultSet = null;
+			
+			preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
+			preparedStatement.setString(1, loadedPatientID);
+			
+			resultSet = preparedStatement.executeQuery();
+			
+			
+			if(resultSet.next())
+			{
+				
+				preparedStatement =(PreparedStatement) connect.prepareStatement(sql);
+				preparedStatement.setString(1, loadedPassbiomedID);
+				
+				resultSet = preparedStatement.executeQuery();
+				while(resultSet.next())
+				{
+					tempTrouble = new Trouble();
+					tempTrouble.setNomUniversel(resultSet.getString("Code_CIM"));
+					tempTrouble.setNomCommun(resultSet.getString("Nom_commun"));
+					tempTrouble.setSousType(resultSet.getString("Nom_sous_type"));
+					tempTrouble.setMasterType(resultSet.getString("Nom_type_trouble"));
+					tempTrouble.setiDConsigner(resultSet.getInt("IDConsigner"));
+					
+					Date date = resultSet.getDate("DateEntreeConsigner");
+					DateFormat df = new SimpleDateFormat("dd/MM/YYYY");
+					String dateFinal = df.format(date);
+					System.out.println(dateFinal);
+					CheckBox essai = new CheckBox();
+					
+					int flagImportance = resultSet.getInt("Important");
+					
+					if(flagImportance == 1) 
+					{	
+						boolean checkboxSelection = true;
+						essai.setSelected(checkboxSelection);
+					}
+					else 
+					{						
+						boolean checkboxSelection = false;
+						essai.setSelected(checkboxSelection);
+					}
+				
+					CheckBox actif = new CheckBox();
+					int flagActif = resultSet.getInt("Actif");
+					
+					if(flagActif == 1) 
+					{
+						boolean checkBoxActif = true;
+						actif.setSelected(checkBoxActif);
+					}
+					else 
+					{
+						boolean checkBoxActif = false;
+						actif.setSelected(checkBoxActif);
+					}
+
+					tempTrouble.setImportant(essai);				
+					tempTrouble.setActif(actif);
+					tempTrouble.setDateConsigner(dateFinal);
+					
+					troubleData.add(tempTrouble);
+				}
+				troubleTable.setItems(troubleData);
+
+			}
+			else
+			{
+				System.out.println("Patient non-trouve");
+			}
+				
+			preparedStatement.close();
+			resultSet.close();
+			
+		}catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+    	
+    }
     
     @FXML
     private void handleRetour() 
@@ -638,7 +753,8 @@ public class PatientOverviewController
     }
     
     @FXML
-    private void handleDeleteTrouble() {
+    private void handleDeleteTrouble() 
+    {
     	if(loadedPatientID.contentEquals("0"))
     	{
     		Alert alert = new Alert(AlertType.ERROR);
@@ -649,8 +765,9 @@ public class PatientOverviewController
     	}
     	else
     	{
-    		Trouble temptrouble = troubleTable.getSelectionModel().getSelectedItem();
+    		Trouble tempTrouble = troubleTable.getSelectionModel().getSelectedItem();
     		try {
+    			
     			Class.forName("com.mysql.jdbc.Driver");
     			System.out.println("Driver OK");
     			
@@ -658,19 +775,34 @@ public class PatientOverviewController
     			String user = "root";
     			String password = "Secret123";
     			
+    			int idConsignerDel = tempTrouble.getiDConsigner();
+    			System.out.println("Id trouble deleted: "+ idConsignerDel);
+    			
+    			
+    			String sql = "DELETE FROM Consigner WHERE `IDConsigner`=?;";
+    			
     			Connection connect = (Connection) DriverManager.getConnection(url, user, password);
-    			ResultSet resultSet = null;
     			
-    			//DELETE FROM `passbiomed_v3`.`consigner` WHERE `IDConsigner`=?;
     			
-    		}catch (Exception e) {
+    			PreparedStatement prepStat =(PreparedStatement) connect.prepareStatement(sql);
+    			prepStat.setInt(1, idConsignerDel );
+    			
+    			prepStat.executeUpdate();
+    			
+    			preparedStatement.close();
+    			
+    			
+    		}catch (Exception e) 
+    		{
 				e.printStackTrace();
     		}
     	}
+    		refreshTabTroubles();
     }
     
     @FXML
-    private void handleEditTrouble() {
+    private void handleEditTrouble() 
+    {
     	if(loadedPatientID.contentEquals("0"))
     	{
     		Alert alert = new Alert(AlertType.ERROR);
@@ -681,7 +813,8 @@ public class PatientOverviewController
     	}
     	else
     	{
-    		
+        	String idPage = loadedPatientID;
+        	System.out.println("ID du patient charge: "+idPage);
     	}
     }
     
@@ -698,7 +831,6 @@ public class PatientOverviewController
     	}
     	else
     	{
-
 	    	try 
 	    	{
 	    		FXMLLoader fxmlLoader = new FXMLLoader();
@@ -707,7 +839,7 @@ public class PatientOverviewController
 	    		Scene scene = new Scene(fxmlLoader.load());
 	    		Stage stage = new Stage();
 	    		
-	    		stage.setTitle("Ajout d'un m�dicament");
+	    		stage.setTitle("Ajout d'un medicament");
 	    		stage.setScene(scene);
 	    		stage.centerOnScreen();
 	    		stage.initModality(Modality.APPLICATION_MODAL);
@@ -739,7 +871,8 @@ public class PatientOverviewController
     }
     
     @FXML
-    private void handleEditMedic() {
+    private void handleEditMedic() 
+    {
     	if(loadedPatientID.contentEquals("0"))
     	{
     		Alert alert = new Alert(AlertType.ERROR);
@@ -753,4 +886,125 @@ public class PatientOverviewController
     		
     	}
     }
-}
+    @FXML
+    private void refreshInfoPatient()
+    {	
+    	
+    	Patient tempPatient = new Patient();
+    	String idPage = loadedPatientID;
+    	int idPatient = Integer.parseInt(idPage);
+    	System.out.println("ID du patient charge: "+idPage);
+    
+    	
+    String nom = nomLabel2.getText();
+    String prenom = prenomLabel2.getText();
+    String groupSang = grpSanLabel2.getText();
+    String adresse = adresseLabel2.getText();
+    String CP = codePosLabel2.getText();
+    String ville = villeLabel2.getText();
+    String tel = phoneLabel2.getText();
+    String birthday = birthdayLabel2.getText();
+    String pays = paysLabel2.getText();
+    String genre = sexeLabel2.getText();
+    String ICENom = iceNomLabel2.getText();
+    String ICETel = iceTelephoneLabel2.getText();
+    String email = emailLabel2.getText();
+    
+    if(nom.length()==0||prenom.length()==0||groupSang.length()==0||adresse.length()==0||CP.length()==0||ville.length()==0||tel.length()==0||birthday.length()==0||pays.length()==0||genre.length()==0||ICENom.length()==0||ICETel.length()==0||email.length()==0) 
+    {
+    		Alert alertas = new Alert(AlertType.ERROR);
+    		alertas.setTitle("Erreur");
+		alertas.setHeaderText("Erreur");
+		alertas.setContentText("Tous les champs n'ont pas ete remplis correctement.");
+		alertas.showAndWait();
+    }
+    else 
+    {
+    		String sql = "SELECT * FROM Patient WHERE IDPatient = ?";	
+    		
+    		try 
+    		{
+    			Class.forName("com.mysql.jdbc.Driver");
+    			String url = "jdbc:mysql://localhost:3306/passbiomed_v3";
+    			String user = "root";
+    			String password = "Secret123";
+    			
+    			Connection connect = (Connection) DriverManager.getConnection(url, user, password);
+    			ResultSet resultSet = null;
+    			
+    			PreparedStatement preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
+    			preparedStatement.setInt(1, idPatient);
+
+    			resultSet = preparedStatement.executeQuery();
+    			
+    			if(resultSet.next())
+    			{	
+    				tempPatient.setIDPatient(resultSet.getInt("IDPatient"));
+    				tempPatient.setIdPassBioMed(resultSet.getInt("IDPasseport_biomed"));
+    				tempPatient.setNom(resultSet.getString("Nom"));
+    				tempPatient.setPrenom(resultSet.getString("Prenom"));
+    				tempPatient.setTelephone(resultSet.getString("Telephone"));
+    				tempPatient.setAdresse(resultSet.getString("Adresse"));
+    				tempPatient.setiCE_nom(resultSet.getString("ICE_nom"));
+    				tempPatient.setiCE_telephone(resultSet.getString("ICE_telephone"));
+    				tempPatient.setGrpSanguin(resultSet.getString("Groupe_sanguin"));
+    				tempPatient.setSexe(resultSet.getString("Sexe"));
+    				tempPatient.setDateNaissance(resultSet.getString("Date_naissance"));
+    				tempPatient.setCodePostal(resultSet.getString("Code_postal"));
+    				tempPatient.setVille(resultSet.getString("Localite"));
+    				tempPatient.setPays(resultSet.getString("Pays"));
+    				tempPatient.setFlagConnexion(resultSet.getInt("Flag_connexion"));
+    				tempPatient.seteMail(resultSet.getString("Email"));
+    				tempPatient.setUrlImage(resultSet.getString("ImageURL"));
+    				tempPatient.setIdPassBioMed(resultSet.getInt("IDPasseport_biomed"));
+    				tempPatient.setIdLogin(resultSet.getInt("IDLogin"));
+    				
+    				System.out.println("ID Patient: "+tempPatient.getIDPatient());
+    				System.out.println("ID PassBiomed: "+tempPatient.getIdPassBioMed());
+    				System.out.println("ID Login: "+tempPatient.getIdLogin());
+    				System.out.println("Nom: "+tempPatient.getNom());
+    				System.out.println("Prenom: "+tempPatient.getPrenom());
+    				System.out.println("Mail: "+tempPatient.geteMail());
+    				
+    				resultSet.close();
+    				preparedStatement.close();
+    				    					
+    			}
+			
+    				String sqlU = "UPDATE Patient SET Nom = ?, Prenom = ?, Telephone = ?, Adresse = ?, ICE_nom = ?, ICE_telephone = ?, Groupe_sanguin = ?, Sexe = ?, Date_naissance = ?, Code_postal= ?, Localite = ?, Pays = ?, Email = ? WHERE IDPatient = ?";
+    				PreparedStatement preparedStatement2 = (PreparedStatement) connect.prepareStatement(sqlU);
+    				preparedStatement2.setString(1, nom);
+    				preparedStatement2.setString(2, prenom);
+    				preparedStatement2.setString(3, tel);
+    				preparedStatement2.setString(4, adresse);
+    				preparedStatement2.setString(5, ICENom);
+    				preparedStatement2.setString(6, ICETel);
+    				preparedStatement2.setString(7, groupSang);
+    				preparedStatement2.setString(8, genre);
+    				preparedStatement2.setString(9, birthday);
+    				preparedStatement2.setString(10, CP);
+    				preparedStatement2.setString(11, ville);
+    				preparedStatement2.setString(12, pays);
+    				preparedStatement2.setString(13, email);
+    				preparedStatement2.setInt(14, idPatient);
+    			
+    				preparedStatement2.executeUpdate();
+    				System.out.println("Patient modifié.");
+    				
+    				Alert alertos = new Alert(AlertType.INFORMATION);
+            		alertos.setTitle("Succes");
+            		alertos.setHeaderText("Succes");
+            		alertos.setContentText("Le patient a ete modifie correctement.");
+            		alertos.showAndWait(); 	
+    			
+    			
+    		}
+    		catch (Exception e) 
+    		{
+			e.printStackTrace();
+    		}   	
+    }
+        		
+   }
+}   
+

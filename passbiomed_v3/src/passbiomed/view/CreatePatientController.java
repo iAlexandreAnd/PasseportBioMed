@@ -527,7 +527,7 @@ public class CreatePatientController
     			Alert alertas = new Alert(AlertType.ERROR);
         		alertas.setTitle("Erreur");
         		alertas.setHeaderText("Erreur");
-        		alertas.setContentText("Tous les champs n'ont pas �t� remplis correctement.");
+        		alertas.setContentText("Tous les champs n'ont pas ete remplis correctement.");
         		alertas.showAndWait(); 
     		}
     		else 
@@ -553,7 +553,7 @@ public class CreatePatientController
     				prepStat.setString(2, mdp);
     				System.out.println("Login ajoute");
     				
-    				// On pr�pare le nouveau passeportBiomed � �tre int�gr� dans sa table
+    				// On prepare le nouveau passeportBiomed a etre integre dans sa table
     				PreparedStatement prepStat2 = (PreparedStatement) connect.prepareStatement(sqlPassport);
     				System.out.println("Entite passaportBioMed va etre inseree.");
     				prepStat2.setString(1, RN);
