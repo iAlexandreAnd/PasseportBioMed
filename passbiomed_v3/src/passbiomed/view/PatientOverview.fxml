@@ -68,7 +68,7 @@
                                        <font>
                                           <Font size="15.0" />
                                        </font></Button>
-                                    <Button mnemonicParsing="false" onAction="#handleEditTrouble" prefHeight="95.0" prefWidth="48.0" text="*" GridPane.rowIndex="2">
+                                    <Button mnemonicParsing="false" onAction="#checkCheckBox" prefHeight="95.0" prefWidth="48.0" text="*" GridPane.rowIndex="2">
                                        <font>
                                           <Font size="15.0" />
                                        </font></Button>

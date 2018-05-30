@@ -10,9 +10,11 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
 
-public class Trouble 
+public class Trouble
 {
 	
 	private final StringProperty nomUniversel;
@@ -23,7 +25,8 @@ public class Trouble
 	private final IntegerProperty iDConsigner;
 	private CheckBox important;
 	private CheckBox actif;
-	
+	private int modifier;
+
 	
 	public Trouble() 
 	{
@@ -157,4 +160,15 @@ public class Trouble
     {
         this.iDConsigner.set(iDConsigner);
     }
+
+	public int getModifier() 
+	{
+		return modifier;
+	}
+	
+	public void setModifier(int modifier) 
+	{
+		this.modifier = modifier;
+	}
+
 }

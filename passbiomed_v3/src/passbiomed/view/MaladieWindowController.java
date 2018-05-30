@@ -243,8 +243,6 @@ public class MaladieWindowController implements Initializable
 			
 			System.out.println("Assignation troubleID OK");
 			
-
-			
 			int importantIsSelected = 0;
 			
 			if(checkImportance.isSelected() == true) 
@@ -281,9 +279,7 @@ public class MaladieWindowController implements Initializable
 			prepStat3.executeUpdate();
 			
 			//INSERT INTO `passbiomed_v3`.`consigner` (`Actif`, `Important`, `IDPasseport_biomed`, `IDTrouble`) VALUES ('0', '0', '2', '5');
-
-			
-			
+		
 		   }catch (Exception e) 
 		   {
 				e.printStackTrace();

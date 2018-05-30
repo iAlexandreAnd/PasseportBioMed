@@ -10,11 +10,13 @@ import java.io.IOException;
 import java.security.KeyStore.ProtectionParameter;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalQuery;
 import java.util.Date;
+import java.util.ListIterator;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -23,6 +25,8 @@ import com.mysql.jdbc.PreparedStatement;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -53,7 +57,7 @@ import passbiomed.model.Operation;
 import passbiomed.model.Patient;
 import passbiomed.model.Trouble;
 
-public class PatientOverviewController 
+public class PatientOverviewController  implements EventHandler<ActionEvent>
 {
 	
 	private ObservableList<Medicament> medicamentData;
@@ -494,6 +498,7 @@ public class PatientOverviewController
 					tempTrouble.setSousType(resultSet.getString("Nom_sous_type"));
 					tempTrouble.setMasterType(resultSet.getString("Nom_type_trouble"));
 					tempTrouble.setiDConsigner(resultSet.getInt("IDConsigner"));
+					tempTrouble.setModifier(0);
 					
 					System.out.println("ID consigner: "+tempTrouble.getiDConsigner());
 					
@@ -504,6 +509,8 @@ public class PatientOverviewController
 					String dateFinal = df.format(date);
 					System.out.println(dateFinal);
 					CheckBox essai = new CheckBox();
+					
+					essai.setOnAction(this);
 					
 					int flagImportance = resultSet.getInt("Important");
 					
@@ -532,6 +539,8 @@ public class PatientOverviewController
 					}
 					
 					CheckBox actif = new CheckBox();
+					actif.setOnAction(this);
+					
 					int flagActif = resultSet.getInt("Actif");
 					
 					System.out.println("Flag actif: "+flagActif);
@@ -996,8 +1005,7 @@ public class PatientOverviewController
             		alertos.setHeaderText("Succes");
             		alertos.setContentText("Le patient a ete modifie correctement.");
             		alertos.showAndWait(); 	
-    			
-    			
+    					
     		}
     		catch (Exception e) 
     		{
@@ -1006,5 +1014,138 @@ public class PatientOverviewController
     }
         		
    }
+    
+   @FXML
+   private void checkCheckBox() 
+   {
+//	   System.out.println("Ligne selectionnée");
+//	   System.out.println("ID: "+troubleTable.getSelectionModel().getSelectedItem().getiDConsigner());
+//	   System.out.println("Code: "+troubleTable.getSelectionModel().getSelectedItem().getNomUniversel());
+//	   System.out.println("Important: "+troubleTable.getSelectionModel().getSelectedItem().getActif().isSelected());
+//	   System.out.println("Actif : "+troubleTable.getSelectionModel().getSelectedItem().getImportant().isSelected());
+//	   System.out.println("Flag modif:"+troubleTable.getSelectionModel().getSelectedItem().getModifier());
+//	   
+//	   System.out.println("");
+//	   System.out.println("******************");
+//	   
+//	   Trouble temptrouble = troubleTable.getSelectionModel().getSelectedItem();
+//	   System.out.println("ID: "+temptrouble.getiDConsigner());
+//	   System.out.println("Code: "+temptrouble.getNomUniversel());
+//	   System.out.println("Important: "+temptrouble.getImportant().isSelected());
+//	   System.out.println("Actif : "+temptrouble.getActif().isSelected());
+//	   System.out.println("Flag modif:"+temptrouble.getModifier());
+//	   
+//	   System.out.println("");
+//	   System.out.println("******************");
+	   
+	   int compteur = 1;
+	   String sql = "UPDATE Consigner SET Important = ?, Actif = ?  WHERE IDConsigner = ?";
+	   
+		  for(Trouble tempTrouble:troubleData) 
+		  {		   
+			   if(tempTrouble.getModifier()==1) 
+			   {
+				try 
+				{
+					Class.forName("com.mysql.jdbc.Driver");
+	   				System.out.println("Driver OK");
+	   				
+	   				String url = "jdbc:mysql://localhost:3306/passbiomed_v3";
+	   				String user = "root";
+	   				String password = "Secret123";
+	   				
+	   				Connection connect;
+					try 
+					{
+						connect = (Connection) DriverManager.getConnection(url, user, password);
+						PreparedStatement prepStat = (PreparedStatement) connect.prepareStatement(sql);
+						
+						int actif = 0;
+						int important = 0;
+						
+						if(tempTrouble.getActif().isSelected()==true) 
+						{
+							actif = 1;
+						}
+						else 
+						{
+							actif = 0;
+						}
+						
+						if(tempTrouble.getImportant().isSelected()==true) 
+						{
+							important = 1;
+						}
+						else 
+						{
+							important = 0;
+						}
+						
+						int ID = tempTrouble.getiDConsigner();
+						
+						prepStat.setInt(1, important);
+						prepStat.setInt(2, actif);
+						prepStat.setInt(3, ID);
+						
+						prepStat.executeUpdate();
+						prepStat.close();
+							
+						System.out.println("");
+						System.out.println("********  Loop: "+compteur+"**********");
+						System.out.println("ID: "+tempTrouble.getiDConsigner());
+						System.out.println("Code: "+tempTrouble.getNomUniversel());
+						System.out.println("Important: "+tempTrouble.getImportant().isSelected());
+						System.out.println("Actif : "+tempTrouble.getActif().isSelected());
+						System.out.println("Flag modif:"+tempTrouble.getModifier());
+						System.out.println("");
+						
+						System.out.println("Les flag d'IDConsiger "+tempTrouble.getiDConsigner()+" ont été mondifiés.");
+					} 
+					catch (SQLException e) 
+					{
+				
+						e.printStackTrace();
+					}
+	   				
+				} 
+				
+				catch (ClassNotFoundException e) 
+				{
+					
+					e.printStackTrace();
+				}
+   				
+			   }
+			   else 
+			   {		
+				   System.out.println(""); 
+				   System.out.println("********  Not Changed: "+compteur+"**********");
+				   System.out.println("");
+			   }
+			   
+			   compteur ++;
+		   }
+   } 
+   
+   @Override
+	public void handle(ActionEvent event) 
+	{
+	   System.out.println("Changed.");
+	   
+	   for(Trouble tempTrouble:troubleData) 
+	   {
+		   if(event.getSource() == tempTrouble.getImportant()) 
+		   {
+			   tempTrouble.setModifier(1);
+		   }
+		   else if(event.getSource() == tempTrouble.getActif())
+		   {
+			   tempTrouble.setModifier(1);
+		   }
+	   }
+	}
+   
+ 
+
 }   
 
