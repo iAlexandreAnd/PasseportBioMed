@@ -114,7 +114,6 @@ public class PatientOverviewController  implements EventHandler<ActionEvent>
     
     /*deuxieme vague*/
     
-    
     @FXML
     private JFXTextField nomLabel2; 
 
@@ -165,6 +164,9 @@ public class PatientOverviewController  implements EventHandler<ActionEvent>
     
     @FXML
     private JFXButton buttonEdit3;
+    
+    @FXML
+    private ImageView picPatient;
    
     
     @FXML
@@ -371,7 +373,8 @@ public class PatientOverviewController  implements EventHandler<ActionEvent>
     			
     			preparedStatement.close();
     			resultSet.close();
-    		}catch (Exception e) {
+    		}catch (Exception e) 
+    		{
     			e.printStackTrace();
     		}
         }
@@ -452,7 +455,6 @@ public class PatientOverviewController  implements EventHandler<ActionEvent>
 			
 			if(resultSet.next())
 			{
-			
 				nomLabel2.setText(resultSet.getString("Nom"));
 				prenomLabel2.setText(resultSet.getString("Prenom"));
 				grpSanLabel2.setText(resultSet.getString("Groupe_sanguin"));
@@ -467,9 +469,11 @@ public class PatientOverviewController  implements EventHandler<ActionEvent>
 				iceTelephoneLabel2.setText(resultSet.getString("ICE_telephone"));
 				emailLabel2.setText(resultSet.getString("Email"));
 				
-				
-				
-				
+				FileInputStream input = new FileInputStream("Ressources/Photos/images.png");
+				Image image = new Image(input);
+				picPatient.setImage(image);
+								
+	
 				preparedStatement =(PreparedStatement) connect.prepareStatement(sql2);
 				preparedStatement.setString(1, loadedPassbiomedID);
 			
@@ -593,6 +597,7 @@ public class PatientOverviewController  implements EventHandler<ActionEvent>
 		{
 			e.printStackTrace();
 		}
+		
     }
     
     private void refreshTabTroubles() 

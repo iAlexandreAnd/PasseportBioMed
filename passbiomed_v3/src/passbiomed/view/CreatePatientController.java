@@ -337,8 +337,8 @@ public class CreatePatientController
     
    void addImage(Image i, StackPane pane)
     {
-	   	int widthImg = 170;
-       	int heightImg = 180;
+	   	int widthImg = 200;
+       	int heightImg = 190;
 	   
         PicturePatient = new ImageView();
         PicturePatient.setImage(i);
@@ -371,6 +371,9 @@ public class CreatePatientController
                         Image img = new Image(new FileInputStream(file.getAbsolutePath())); 
                         
                         addImage(img, contentPane);
+               
+
+                        
                     } catch (FileNotFoundException ex) 
                     {
                         Logger.getLogger(CreatePatientController.class.getName()).log(Level.SEVERE, null, ex);

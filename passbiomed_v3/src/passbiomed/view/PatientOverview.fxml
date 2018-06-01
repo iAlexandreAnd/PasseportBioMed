@@ -245,21 +245,11 @@
                   <JFXTextField fx:id="iceTelephoneLabel2" alignment="CENTER" prefHeight="27.0" prefWidth="268.0" stylesheets="@styleCss.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>
-            <GridPane layoutX="401.0" layoutY="20.0" prefHeight="147.0" prefWidth="149.0" style="-fx-border-color: #CA8A32#CA8A32; -fx-border-width: 3;">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <ImageView fitHeight="142.0" fitWidth="146.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../Ressources/Wallpaper/Logo.jpg" />
-                     </image>
-                  </ImageView>
-               </children>
-            </GridPane>
+            <ImageView fx:id="picPatient" fitHeight="142.0" fitWidth="146.0" layoutX="404.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Ressources/Wallpaper/Logo.jpg" />
+               </image>
+            </ImageView>
             <GridPane fx:id="editGridPatient" layoutX="565.0" layoutY="18.0" prefHeight="155.0" prefWidth="49.0" vgap="5.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
