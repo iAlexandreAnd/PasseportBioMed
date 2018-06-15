@@ -337,8 +337,8 @@ public class CreatePatientController
     
    void addImage(Image i, StackPane pane)
     {
-	   	int widthImg = 170;
-       	int heightImg = 180;
+	   	int widthImg = 200;
+       	int heightImg = 190;
 	   
         PicturePatient = new ImageView();
         PicturePatient.setImage(i);
@@ -371,6 +371,9 @@ public class CreatePatientController
                         Image img = new Image(new FileInputStream(file.getAbsolutePath())); 
                         
                         addImage(img, contentPane);
+               
+
+                        
                     } catch (FileNotFoundException ex) 
                     {
                         Logger.getLogger(CreatePatientController.class.getName()).log(Level.SEVERE, null, ex);
@@ -527,7 +530,7 @@ public class CreatePatientController
     			Alert alertas = new Alert(AlertType.ERROR);
         		alertas.setTitle("Erreur");
         		alertas.setHeaderText("Erreur");
-        		alertas.setContentText("Tous les champs n'ont pas �t� remplis correctement.");
+        		alertas.setContentText("Tous les champs n'ont pas ete remplis correctement.");
         		alertas.showAndWait(); 
     		}
     		else 
@@ -553,7 +556,7 @@ public class CreatePatientController
     				prepStat.setString(2, mdp);
     				System.out.println("Login ajoute");
     				
-    				// On pr�pare le nouveau passeportBiomed � �tre int�gr� dans sa table
+    				// On prepare le nouveau passeportBiomed a etre integre dans sa table
     				PreparedStatement prepStat2 = (PreparedStatement) connect.prepareStatement(sqlPassport);
     				System.out.println("Entite passaportBioMed va etre inseree.");
     				prepStat2.setString(1, RN);
@@ -567,7 +570,7 @@ public class CreatePatientController
     				IDlog = recupIdLogin(identifiant);
     				IdPassbiomed = recupIdPassBiomed(RN);
     				
-    				// Affichiage de v�rification de la r�cup des ID.
+    				// Affichiage de verification de la recup des ID.
     				System.out.println(IDlog);
     				System.out.println(IdPassbiomed);
     				
@@ -599,7 +602,7 @@ public class CreatePatientController
     				Alert alertos = new Alert(AlertType.INFORMATION);
             		alertos.setTitle("Succes");
             		alertos.setHeaderText("Succes");
-            		alertos.setContentText("La creation s'est d�roul�e correctement.");
+            		alertos.setContentText("La creation s'est deroulee correctement.");
             		alertos.showAndWait(); 		
     				
     			}catch (Exception e) 
@@ -607,7 +610,7 @@ public class CreatePatientController
     				Alert alertis = new Alert(AlertType.ERROR);
             		alertis.setTitle("Erreur");
             		alertis.setHeaderText("Erreur");
-            		alertis.setContentText("Une erreur est survenue lors de l'ajout dans la base de donn�es.");
+            		alertis.setContentText("Une erreur est survenue lors de l'ajout dans la base de donnees.");
             		alertis.showAndWait(); 
     				
             		e.printStackTrace();

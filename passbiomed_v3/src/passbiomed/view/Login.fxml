@@ -27,8 +27,8 @@
       <JFXButton buttonType="RAISED" ellipsisString="" layoutX="99.0" layoutY="230.0" prefHeight="32.0" prefWidth="139.0" style="-fx-background-color: #2E457F#2E457F; -fx-background-radius: 40;" text="Sign Up" textFill="WHITE" underline="true" />
       <AnchorPane fx:id="PaneEssai" layoutX="338.0" layoutY="29.0" prefHeight="368.0" prefWidth="299.0" style="-fx-background-color: #8F3027#8F3027; -fx-border-color: #CA8A32#CA8A32 #CA8A32#CA8A32; -fx-border-width: 2; -fx-border-radius: 4; -fx-background-radius: 6;">
          <children>
-            <JFXTextField fx:id="loginField" alignment="TOP_CENTER" layoutX="14.0" layoutY="157.0" prefHeight="26.0" prefWidth="275.0" promptText="Username/email" stylesheets="@styleCss.css" unFocusColor="WHITE" />
-            <JFXPasswordField fx:id="passwordField" alignment="CENTER" layoutX="14.0" layoutY="214.0" prefHeight="26.0" prefWidth="275.0" promptText="Password" stylesheets="@styleCss.css" unFocusColor="#e1dada" />
+            <JFXTextField fx:id="loginField" alignment="TOP_CENTER" layoutX="14.0" layoutY="157.0" prefHeight="26.0" prefWidth="275.0" promptText="Username/email" stylesheets="@styleCss.css" text="Admin" unFocusColor="WHITE" />
+            <JFXPasswordField fx:id="passwordField" alignment="CENTER" layoutX="14.0" layoutY="214.0" prefHeight="26.0" prefWidth="275.0" promptText="Password" stylesheets="@styleCss.css" text="Secret123" unFocusColor="#e1dada" />
             <JFXButton fx:id="connectButton" buttonType="RAISED" ellipsisString="" layoutX="14.0" layoutY="270.0" onAction="#handleConnect" prefHeight="32.0" prefWidth="275.0" style="-fx-background-color: #2E457F#2E457F; -fx-background-radius: 40;" text="Sign In" textFill="WHITE" underline="true" />
             <Label layoutX="114.0" layoutY="34.0" style="-fx-border-style: simple;" text="Sign In" textFill="WHITE">
                <font>
@@ -46,3 +46,4 @@
       </AnchorPane>
    </children>
 </AnchorPane>
+

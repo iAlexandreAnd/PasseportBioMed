@@ -10,18 +10,23 @@ import java.io.IOException;
 import java.security.KeyStore.ProtectionParameter;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalQuery;
 import java.util.Date;
+import java.util.ListIterator;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -38,14 +43,21 @@ import javafx.scene.control.skin.TextFieldSkin;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import passbiomed.MainApp;
 import passbiomed.model.Medicament;
 import passbiomed.model.Operation;
+import passbiomed.model.Patient;
 import passbiomed.model.Trouble;
 
-public class PatientOverviewController 
+public class PatientOverviewController  implements EventHandler<ActionEvent>
 {
 	
 	private ObservableList<Medicament> medicamentData;
@@ -102,7 +114,6 @@ public class PatientOverviewController
     
     /*deuxieme vague*/
     
-    
     @FXML
     private JFXTextField nomLabel2; 
 
@@ -140,7 +151,23 @@ public class PatientOverviewController
     private JFXTextField iceTelephoneLabel2;
     
     @FXML
-    private Button buttonTest;
+    private JFXTextField emailLabel2;
+    
+    @FXML
+    private GridPane editGridPatient;
+    
+    @FXML
+    private JFXButton buttonEdit1;
+    
+    @FXML
+    private JFXButton buttonEdit2;
+    
+    @FXML
+    private JFXButton buttonEdit3;
+    
+    @FXML
+    private ImageView picPatient;
+   
     
     @FXML
     private Button retourButton;
@@ -173,33 +200,132 @@ public class PatientOverviewController
     	flagImportance.setCellValueFactory(new PropertyValueFactory<Trouble, String>("important"));
     	flagActif.setCellValueFactory(new PropertyValueFactory<Trouble, String>("actif"));
     	
-    	//Tableview d'op�ration et traitement
+    	//Tableview d'operation et traitement
     	nomOperationColonne.setCellValueFactory(new PropertyValueFactory<Operation, String>("nomOperation"));
     	commentaireOpColonne.setCellValueFactory(new PropertyValueFactory<Operation, String>("commentaire"));
-    	
-    	paneInfoPatient.setDisable(true);
+
     flagImportance.setStyle("-fx-alignment: CENTER;");
     	flagActif.setStyle("-fx-alignment: CENTER;");
     	
-    	FileInputStream input = null;
-		try 
-		{
-			input = new FileInputStream("Ressources/Icons/006-signs.png");
-		} 
-		catch (FileNotFoundException e) 
-		{
-			e.printStackTrace();
-		}
-    Image image = new Image(input);
-    ImageView imageView = new ImageView(image);
+//    //////////////////////////////////////////////////////////////// 
+//    	//boutton 1	
+//    	FileInputStream input = null;
+//		try 
+//		{
+//			input = new FileInputStream("Ressources/Icons/007-cogwheel.png");
+//		} 
+//		catch (FileNotFoundException e) 
+//		{
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//    
+//	
+//	Image image = new Image(input);
+//    ImageView imageView = new ImageView(image);
+//    imageView.setFitWidth(30);
+//    imageView.setPreserveRatio(true);
+//    imageView.setSmooth(true);
+//    imageView.setCache(true); 
+//   
+//    buttonEdit1.setGraphic(imageView);
+//    
+//    ////////////////////////////////////////////////////////////////   
+//    //boutton 1	
+//    FileInputStream input2 = null;
+//	try 
+//	{
+//		input2 = new FileInputStream("Ressources/Icons/005-check-1.png");
+//	} 
+//	catch (FileNotFoundException e) 
+//	{
+//		// 
+//		e.printStackTrace();
+//	}
+//
+//	
+//	Image image2 = new Image(input2);
+//	ImageView imageView2 = new ImageView(image2);
+//	imageView2.setFitWidth(30);
+//	imageView2.setPreserveRatio(true);
+//	imageView2.setSmooth(true);
+//	imageView2.setCache(true); 
+//
+//	buttonEdit2.setGraphic(imageView2);
+//	
+	////////////////////////////////////////////////////////////////
     
-    buttonTest.setGraphic(imageView);
-    
-
-//    Button button = new Button("Home", imageView);
+    	
+    	initTextFildsClosed();
+    	
     	
     }
     
+    void initTextFildsClosed() 
+    {
+    	
+       nomLabel2.setEditable(false);
+       prenomLabel2.setEditable(false);
+       grpSanLabel2.setEditable(false);
+       adresseLabel2.setEditable(false);
+       codePosLabel2.setEditable(false);
+       villeLabel2.setEditable(false);
+       phoneLabel2.setEditable(false);
+       birthdayLabel2.setEditable(false);
+       paysLabel2.setEditable(false);
+       sexeLabel2.setEditable(false);
+       iceNomLabel2.setEditable(false);
+       iceTelephoneLabel2.setEditable(false);
+       emailLabel2.setEditable(false);
+       buttonEdit2.setVisible(false);
+       buttonEdit3.setVisible(false);
+       
+    }
+   
+    @FXML
+    void editPatientOn() 
+    {
+    		nomLabel2.setEditable(true);
+        prenomLabel2.setEditable(true);
+        grpSanLabel2.setEditable(true);
+        adresseLabel2.setEditable(true);
+        codePosLabel2.setEditable(true);
+        villeLabel2.setEditable(true);
+        phoneLabel2.setEditable(true);
+        birthdayLabel2.setEditable(true);
+        paysLabel2.setEditable(true);
+        sexeLabel2.setEditable(true);
+        iceNomLabel2.setEditable(true);
+        iceTelephoneLabel2.setEditable(true);
+        emailLabel2.setEditable(true);
+        buttonEdit2.setVisible(true);
+        buttonEdit3.setVisible(true);
+        buttonEdit1.setVisible(false);
+    	
+    }
+    
+    @FXML
+    void editPatientCancel() 
+    {
+    		nomLabel2.setEditable(false);
+        prenomLabel2.setEditable(false);
+        grpSanLabel2.setEditable(false);
+        adresseLabel2.setEditable(false);
+        codePosLabel2.setEditable(false);
+        villeLabel2.setEditable(false);
+        phoneLabel2.setEditable(false);
+        birthdayLabel2.setEditable(false);
+        paysLabel2.setEditable(false);
+        sexeLabel2.setEditable(false);
+        iceNomLabel2.setEditable(false);
+        iceTelephoneLabel2.setEditable(false);
+        emailLabel2.setEditable(false);
+        buttonEdit2.setVisible(false);
+        buttonEdit3.setVisible(false);
+        buttonEdit1.setVisible(true);
+        
+        handleOk();
+    }
     
     @FXML
     private void handleOk() 
@@ -237,24 +363,26 @@ public class PatientOverviewController
     			}
     			else
     			{
-    				System.out.println("Patient non-trouv�");
+    				System.out.println("Patient non-trouve");
     				Alert alert = new Alert(AlertType.ERROR);
     	            alert.setTitle("Erreur");
     	            alert.setHeaderText("Erreur");
-    	            alert.setContentText("Patient n'a pas �t� trouv�");
+    	            alert.setContentText("Patient n'a pas ete trouve");
     	            alert.showAndWait();
     			}
     			
     			preparedStatement.close();
     			resultSet.close();
-    		}catch (Exception e) {
+    		}catch (Exception e) 
+    		{
     			e.printStackTrace();
     		}
         }
     }
     
     
-    private boolean isInputValid() {
+    private boolean isInputValid() 
+    {
         String errorMessage = "";
 
         if (nomField == null) {
@@ -296,7 +424,7 @@ public class PatientOverviewController
     			"inner join repertorier using(IDPasseport_biomed)\n" + 
     			"inner join medicament using(IDMedicament)\n" + 
     			"where IDPasseport_biomed=? ;";
-    	String sql3 = "Select troubles.Code_CIM, troubles.Nom_commun, sous_type.Nom_sous_type, type_trouble.Nom_type_trouble, Consigner.DateEntreeConsigner, Consigner.Important, Consigner.Actif from patient\n" + 
+    	String sql3 = "Select troubles.Code_CIM, troubles.Nom_commun, sous_type.Nom_sous_type, type_trouble.Nom_type_trouble, Consigner.DateEntreeConsigner, Consigner.Important, Consigner.Actif, Consigner.IDConsigner from patient\n" + 
     			"inner join passeport_biomed using (IDPasseport_biomed)\n" + 
     			"inner join consigner using (IDPasseport_biomed)\n" + 
     			"inner join troubles using (IDTrouble)\n" + 
@@ -327,7 +455,6 @@ public class PatientOverviewController
 			
 			if(resultSet.next())
 			{
-			
 				nomLabel2.setText(resultSet.getString("Nom"));
 				prenomLabel2.setText(resultSet.getString("Prenom"));
 				grpSanLabel2.setText(resultSet.getString("Groupe_sanguin"));
@@ -340,9 +467,13 @@ public class PatientOverviewController
 				sexeLabel2.setText(resultSet.getString("Sexe"));
 				iceNomLabel2.setText(resultSet.getString("ICE_nom"));
 				iceTelephoneLabel2.setText(resultSet.getString("ICE_telephone"));
+				emailLabel2.setText(resultSet.getString("Email"));
 				
-				
-				
+				FileInputStream input = new FileInputStream("Ressources/Photos/images.png");
+				Image image = new Image(input);
+				picPatient.setImage(image);
+								
+	
 				preparedStatement =(PreparedStatement) connect.prepareStatement(sql2);
 				preparedStatement.setString(1, loadedPassbiomedID);
 			
@@ -370,6 +501,10 @@ public class PatientOverviewController
 					tempTrouble.setNomCommun(resultSet.getString("Nom_commun"));
 					tempTrouble.setSousType(resultSet.getString("Nom_sous_type"));
 					tempTrouble.setMasterType(resultSet.getString("Nom_type_trouble"));
+					tempTrouble.setiDConsigner(resultSet.getInt("IDConsigner"));
+					tempTrouble.setModifier(0);
+					
+					System.out.println("ID consigner: "+tempTrouble.getiDConsigner());
 					
 //					String dateEssai = resultSet.getDate("DateEntreeConsigner").toString();
 					
@@ -378,6 +513,8 @@ public class PatientOverviewController
 					String dateFinal = df.format(date);
 					System.out.println(dateFinal);
 					CheckBox essai = new CheckBox();
+					
+					essai.setOnAction(this);
 					
 					int flagImportance = resultSet.getInt("Important");
 					
@@ -406,6 +543,8 @@ public class PatientOverviewController
 					}
 					
 					CheckBox actif = new CheckBox();
+					actif.setOnAction(this);
+					
 					int flagActif = resultSet.getInt("Actif");
 					
 					System.out.println("Flag actif: "+flagActif);
@@ -454,11 +593,117 @@ public class PatientOverviewController
 			preparedStatement.close();
 			resultSet.close();
 			
-		}catch (Exception e) {
+		}catch (Exception e) 
+		{
 			e.printStackTrace();
 		}
+		
     }
     
+    private void refreshTabTroubles() 
+    {
+    	troubleData = FXCollections.observableArrayList();
+
+    	
+    	Trouble tempTrouble;
+
+    	String sql = "Select troubles.Code_CIM, troubles.Nom_commun, sous_type.Nom_sous_type, type_trouble.Nom_type_trouble, Consigner.DateEntreeConsigner, Consigner.Important, Consigner.Actif, Consigner.IDConsigner from patient\n" + 
+    			"inner join passeport_biomed using (IDPasseport_biomed)\n" + 
+    			"inner join consigner using (IDPasseport_biomed)\n" + 
+    			"inner join troubles using (IDTrouble)\n" + 
+    			"inner join sous_type using (IDSous_type)\n" + 
+    			"inner join type_trouble using(IDType_trouble)\n" +
+    			"where IDPasseport_biomed = ?;";
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			System.out.println("Driver OK");
+			
+			String url = "jdbc:mysql://localhost:3306/passbiomed_v3";
+			String user = "root";
+			String password = "Secret123";
+			
+			Connection connect = (Connection) DriverManager.getConnection(url, user, password);
+			ResultSet resultSet = null;
+			
+			preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
+			preparedStatement.setString(1, loadedPatientID);
+			
+			resultSet = preparedStatement.executeQuery();
+			
+			
+			if(resultSet.next())
+			{
+				
+				preparedStatement =(PreparedStatement) connect.prepareStatement(sql);
+				preparedStatement.setString(1, loadedPassbiomedID);
+				
+				resultSet = preparedStatement.executeQuery();
+				while(resultSet.next())
+				{
+					tempTrouble = new Trouble();
+					tempTrouble.setNomUniversel(resultSet.getString("Code_CIM"));
+					tempTrouble.setNomCommun(resultSet.getString("Nom_commun"));
+					tempTrouble.setSousType(resultSet.getString("Nom_sous_type"));
+					tempTrouble.setMasterType(resultSet.getString("Nom_type_trouble"));
+					tempTrouble.setiDConsigner(resultSet.getInt("IDConsigner"));
+					
+					Date date = resultSet.getDate("DateEntreeConsigner");
+					DateFormat df = new SimpleDateFormat("dd/MM/YYYY");
+					String dateFinal = df.format(date);
+					System.out.println(dateFinal);
+					CheckBox essai = new CheckBox();
+					
+					int flagImportance = resultSet.getInt("Important");
+					
+					if(flagImportance == 1) 
+					{	
+						boolean checkboxSelection = true;
+						essai.setSelected(checkboxSelection);
+					}
+					else 
+					{						
+						boolean checkboxSelection = false;
+						essai.setSelected(checkboxSelection);
+					}
+				
+					CheckBox actif = new CheckBox();
+					int flagActif = resultSet.getInt("Actif");
+					
+					if(flagActif == 1) 
+					{
+						boolean checkBoxActif = true;
+						actif.setSelected(checkBoxActif);
+					}
+					else 
+					{
+						boolean checkBoxActif = false;
+						actif.setSelected(checkBoxActif);
+					}
+
+					tempTrouble.setImportant(essai);				
+					tempTrouble.setActif(actif);
+					tempTrouble.setDateConsigner(dateFinal);
+					
+					troubleData.add(tempTrouble);
+				}
+				troubleTable.setItems(troubleData);
+
+			}
+			else
+			{
+				System.out.println("Patient non-trouve");
+			}
+				
+			preparedStatement.close();
+			resultSet.close();
+			
+		}catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+    	
+    }
     
     @FXML
     private void handleRetour() 
@@ -522,7 +767,8 @@ public class PatientOverviewController
     }
     
     @FXML
-    private void handleDeleteTrouble() {
+    private void handleDeleteTrouble() 
+    {
     	if(loadedPatientID.contentEquals("0"))
     	{
     		Alert alert = new Alert(AlertType.ERROR);
@@ -533,8 +779,9 @@ public class PatientOverviewController
     	}
     	else
     	{
-    		Trouble temptrouble = troubleTable.getSelectionModel().getSelectedItem();
+    		Trouble tempTrouble = troubleTable.getSelectionModel().getSelectedItem();
     		try {
+    			
     			Class.forName("com.mysql.jdbc.Driver");
     			System.out.println("Driver OK");
     			
@@ -542,19 +789,34 @@ public class PatientOverviewController
     			String user = "root";
     			String password = "Secret123";
     			
+    			int idConsignerDel = tempTrouble.getiDConsigner();
+    			System.out.println("Id trouble deleted: "+ idConsignerDel);
+    			
+    			
+    			String sql = "DELETE FROM Consigner WHERE `IDConsigner`=?;";
+    			
     			Connection connect = (Connection) DriverManager.getConnection(url, user, password);
-    			ResultSet resultSet = null;
     			
-    			//DELETE FROM `passbiomed_v3`.`consigner` WHERE `IDConsigner`=?;
     			
-    		}catch (Exception e) {
+    			PreparedStatement prepStat =(PreparedStatement) connect.prepareStatement(sql);
+    			prepStat.setInt(1, idConsignerDel );
+    			
+    			prepStat.executeUpdate();
+    			
+    			preparedStatement.close();
+    			
+    			
+    		}catch (Exception e) 
+    		{
 				e.printStackTrace();
     		}
     	}
+    		refreshTabTroubles();
     }
     
     @FXML
-    private void handleEditTrouble() {
+    private void handleEditTrouble() 
+    {
     	if(loadedPatientID.contentEquals("0"))
     	{
     		Alert alert = new Alert(AlertType.ERROR);
@@ -565,7 +827,8 @@ public class PatientOverviewController
     	}
     	else
     	{
-    		
+        	String idPage = loadedPatientID;
+        	System.out.println("ID du patient charge: "+idPage);
     	}
     }
     
@@ -582,7 +845,6 @@ public class PatientOverviewController
     	}
     	else
     	{
-
 	    	try 
 	    	{
 	    		FXMLLoader fxmlLoader = new FXMLLoader();
@@ -591,7 +853,7 @@ public class PatientOverviewController
 	    		Scene scene = new Scene(fxmlLoader.load());
 	    		Stage stage = new Stage();
 	    		
-	    		stage.setTitle("Ajout d'un m�dicament");
+	    		stage.setTitle("Ajout d'un medicament");
 	    		stage.setScene(scene);
 	    		stage.centerOnScreen();
 	    		stage.initModality(Modality.APPLICATION_MODAL);
@@ -623,7 +885,8 @@ public class PatientOverviewController
     }
     
     @FXML
-    private void handleEditMedic() {
+    private void handleEditMedic() 
+    {
     	if(loadedPatientID.contentEquals("0"))
     	{
     		Alert alert = new Alert(AlertType.ERROR);
@@ -637,4 +900,257 @@ public class PatientOverviewController
     		
     	}
     }
-}
+    @FXML
+    private void refreshInfoPatient()
+    {	
+    	
+    	Patient tempPatient = new Patient();
+    	String idPage = loadedPatientID;
+    	int idPatient = Integer.parseInt(idPage);
+    	System.out.println("ID du patient charge: "+idPage);
+    
+    	
+    String nom = nomLabel2.getText();
+    String prenom = prenomLabel2.getText();
+    String groupSang = grpSanLabel2.getText();
+    String adresse = adresseLabel2.getText();
+    String CP = codePosLabel2.getText();
+    String ville = villeLabel2.getText();
+    String tel = phoneLabel2.getText();
+    String birthday = birthdayLabel2.getText();
+    String pays = paysLabel2.getText();
+    String genre = sexeLabel2.getText();
+    String ICENom = iceNomLabel2.getText();
+    String ICETel = iceTelephoneLabel2.getText();
+    String email = emailLabel2.getText();
+    
+    if(nom.length()==0||prenom.length()==0||groupSang.length()==0||adresse.length()==0||CP.length()==0||ville.length()==0||tel.length()==0||birthday.length()==0||pays.length()==0||genre.length()==0||ICENom.length()==0||ICETel.length()==0||email.length()==0) 
+    {
+    		Alert alertas = new Alert(AlertType.ERROR);
+    		alertas.setTitle("Erreur");
+		alertas.setHeaderText("Erreur");
+		alertas.setContentText("Tous les champs n'ont pas ete remplis correctement.");
+		alertas.showAndWait();
+    }
+    else 
+    {
+    		String sql = "SELECT * FROM Patient WHERE IDPatient = ?";	
+    		
+    		try 
+    		{
+    			Class.forName("com.mysql.jdbc.Driver");
+    			String url = "jdbc:mysql://localhost:3306/passbiomed_v3";
+    			String user = "root";
+    			String password = "Secret123";
+    			
+    			Connection connect = (Connection) DriverManager.getConnection(url, user, password);
+    			ResultSet resultSet = null;
+    			
+    			PreparedStatement preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
+    			preparedStatement.setInt(1, idPatient);
+
+    			resultSet = preparedStatement.executeQuery();
+    			
+    			if(resultSet.next())
+    			{	
+    				tempPatient.setIDPatient(resultSet.getInt("IDPatient"));
+    				tempPatient.setIdPassBioMed(resultSet.getInt("IDPasseport_biomed"));
+    				tempPatient.setNom(resultSet.getString("Nom"));
+    				tempPatient.setPrenom(resultSet.getString("Prenom"));
+    				tempPatient.setTelephone(resultSet.getString("Telephone"));
+    				tempPatient.setAdresse(resultSet.getString("Adresse"));
+    				tempPatient.setiCE_nom(resultSet.getString("ICE_nom"));
+    				tempPatient.setiCE_telephone(resultSet.getString("ICE_telephone"));
+    				tempPatient.setGrpSanguin(resultSet.getString("Groupe_sanguin"));
+    				tempPatient.setSexe(resultSet.getString("Sexe"));
+    				tempPatient.setDateNaissance(resultSet.getString("Date_naissance"));
+    				tempPatient.setCodePostal(resultSet.getString("Code_postal"));
+    				tempPatient.setVille(resultSet.getString("Localite"));
+    				tempPatient.setPays(resultSet.getString("Pays"));
+    				tempPatient.setFlagConnexion(resultSet.getInt("Flag_connexion"));
+    				tempPatient.seteMail(resultSet.getString("Email"));
+    				tempPatient.setUrlImage(resultSet.getString("ImageURL"));
+    				tempPatient.setIdPassBioMed(resultSet.getInt("IDPasseport_biomed"));
+    				tempPatient.setIdLogin(resultSet.getInt("IDLogin"));
+    				
+    				System.out.println("ID Patient: "+tempPatient.getIDPatient());
+    				System.out.println("ID PassBiomed: "+tempPatient.getIdPassBioMed());
+    				System.out.println("ID Login: "+tempPatient.getIdLogin());
+    				System.out.println("Nom: "+tempPatient.getNom());
+    				System.out.println("Prenom: "+tempPatient.getPrenom());
+    				System.out.println("Mail: "+tempPatient.geteMail());
+    				
+    				resultSet.close();
+    				preparedStatement.close();
+    				    					
+    			}
+			
+    				String sqlU = "UPDATE Patient SET Nom = ?, Prenom = ?, Telephone = ?, Adresse = ?, ICE_nom = ?, ICE_telephone = ?, Groupe_sanguin = ?, Sexe = ?, Date_naissance = ?, Code_postal= ?, Localite = ?, Pays = ?, Email = ? WHERE IDPatient = ?";
+    				PreparedStatement preparedStatement2 = (PreparedStatement) connect.prepareStatement(sqlU);
+    				preparedStatement2.setString(1, nom);
+    				preparedStatement2.setString(2, prenom);
+    				preparedStatement2.setString(3, tel);
+    				preparedStatement2.setString(4, adresse);
+    				preparedStatement2.setString(5, ICENom);
+    				preparedStatement2.setString(6, ICETel);
+    				preparedStatement2.setString(7, groupSang);
+    				preparedStatement2.setString(8, genre);
+    				preparedStatement2.setString(9, birthday);
+    				preparedStatement2.setString(10, CP);
+    				preparedStatement2.setString(11, ville);
+    				preparedStatement2.setString(12, pays);
+    				preparedStatement2.setString(13, email);
+    				preparedStatement2.setInt(14, idPatient);
+    			
+    				preparedStatement2.executeUpdate();
+    				System.out.println("Patient modifié.");
+    				
+    				Alert alertos = new Alert(AlertType.INFORMATION);
+            		alertos.setTitle("Succes");
+            		alertos.setHeaderText("Succes");
+            		alertos.setContentText("Le patient a ete modifie correctement.");
+            		alertos.showAndWait(); 	
+    					
+    		}
+    		catch (Exception e) 
+    		{
+			e.printStackTrace();
+    		}   	
+    }
+        		
+   }
+    
+   @FXML
+   private void checkCheckBox() 
+   {
+//	   System.out.println("Ligne selectionnée");
+//	   System.out.println("ID: "+troubleTable.getSelectionModel().getSelectedItem().getiDConsigner());
+//	   System.out.println("Code: "+troubleTable.getSelectionModel().getSelectedItem().getNomUniversel());
+//	   System.out.println("Important: "+troubleTable.getSelectionModel().getSelectedItem().getActif().isSelected());
+//	   System.out.println("Actif : "+troubleTable.getSelectionModel().getSelectedItem().getImportant().isSelected());
+//	   System.out.println("Flag modif:"+troubleTable.getSelectionModel().getSelectedItem().getModifier());
+//	   
+//	   System.out.println("");
+//	   System.out.println("******************");
+//	   
+//	   Trouble temptrouble = troubleTable.getSelectionModel().getSelectedItem();
+//	   System.out.println("ID: "+temptrouble.getiDConsigner());
+//	   System.out.println("Code: "+temptrouble.getNomUniversel());
+//	   System.out.println("Important: "+temptrouble.getImportant().isSelected());
+//	   System.out.println("Actif : "+temptrouble.getActif().isSelected());
+//	   System.out.println("Flag modif:"+temptrouble.getModifier());
+//	   
+//	   System.out.println("");
+//	   System.out.println("******************");
+	   
+	   int compteur = 1;
+	   String sql = "UPDATE Consigner SET Important = ?, Actif = ?  WHERE IDConsigner = ?";
+	   
+		  for(Trouble tempTrouble:troubleData) 
+		  {		   
+			   if(tempTrouble.getModifier()==1) 
+			   {
+				try 
+				{
+					Class.forName("com.mysql.jdbc.Driver");
+	   				System.out.println("Driver OK");
+	   				
+	   				String url = "jdbc:mysql://localhost:3306/passbiomed_v3";
+	   				String user = "root";
+	   				String password = "Secret123";
+	   				
+	   				Connection connect;
+					try 
+					{
+						connect = (Connection) DriverManager.getConnection(url, user, password);
+						PreparedStatement prepStat = (PreparedStatement) connect.prepareStatement(sql);
+						
+						int actif = 0;
+						int important = 0;
+						
+						if(tempTrouble.getActif().isSelected()==true) 
+						{
+							actif = 1;
+						}
+						else 
+						{
+							actif = 0;
+						}
+						
+						if(tempTrouble.getImportant().isSelected()==true) 
+						{
+							important = 1;
+						}
+						else 
+						{
+							important = 0;
+						}
+						
+						int ID = tempTrouble.getiDConsigner();
+						
+						prepStat.setInt(1, important);
+						prepStat.setInt(2, actif);
+						prepStat.setInt(3, ID);
+						
+						prepStat.executeUpdate();
+						prepStat.close();
+							
+						System.out.println("");
+						System.out.println("********  Loop: "+compteur+"**********");
+						System.out.println("ID: "+tempTrouble.getiDConsigner());
+						System.out.println("Code: "+tempTrouble.getNomUniversel());
+						System.out.println("Important: "+tempTrouble.getImportant().isSelected());
+						System.out.println("Actif : "+tempTrouble.getActif().isSelected());
+						System.out.println("Flag modif:"+tempTrouble.getModifier());
+						System.out.println("");
+						
+						System.out.println("Les flag d'IDConsiger "+tempTrouble.getiDConsigner()+" ont été mondifiés.");
+					} 
+					catch (SQLException e) 
+					{
+				
+						e.printStackTrace();
+					}
+	   				
+				} 
+				
+				catch (ClassNotFoundException e) 
+				{
+					
+					e.printStackTrace();
+				}
+   				
+			   }
+			   else 
+			   {		
+				   System.out.println(""); 
+				   System.out.println("********  Not Changed: "+compteur+"**********");
+				   System.out.println("");
+			   }
+			   
+			   compteur ++;
+		   }
+   } 
+   
+   @Override
+	public void handle(ActionEvent event) 
+	{
+	   System.out.println("Changed.");
+	   
+	   for(Trouble tempTrouble:troubleData) 
+	   {
+		   if(event.getSource() == tempTrouble.getImportant()) 
+		   {
+			   tempTrouble.setModifier(1);
+		   }
+		   else if(event.getSource() == tempTrouble.getActif())
+		   {
+			   tempTrouble.setModifier(1);
+		   }
+	   }
+	}
+   
+ 
+
+}   
+
